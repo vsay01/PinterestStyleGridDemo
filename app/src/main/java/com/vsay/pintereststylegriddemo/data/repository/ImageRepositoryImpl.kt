@@ -1,22 +1,22 @@
 package com.vsay.pintereststylegriddemo.data.repository
 
+import com.vsay.pintereststylegriddemo.data.model.toDomain
+import com.vsay.pintereststylegriddemo.data.remote.ApiService
 import com.vsay.pintereststylegriddemo.domain.model.Image
 import com.vsay.pintereststylegriddemo.domain.repository.ImageRepository
 
-class ImageRepositoryImpl : ImageRepository {
-    override suspend fun getImages(): List<Image> {
-        return listOf(
-            Image("1", "https://picsum.photos/300/500"),
-            Image("2", "https://picsum.photos/300/450"),
-            Image("3", "https://picsum.photos/300/600"),
-            Image("4", "https://picsum.photos/300/400"),
-            Image("5", "https://picsum.photos/300/550"),
-            Image("6", "https://picsum.photos/300/350"),
-            Image("7", "https://picsum.photos/300/500"),
-            Image("8", "https://picsum.photos/300/450"),
-            Image("9", "https://picsum.photos/300/600"),
-            Image("10", "https://picsum.photos/300/400"),
-            Image("11", "https://picsum.photos/300/550"),
-        )
+/**
+ * Implementation of the [ImageRepository] interface.
+ *
+ * This class is responsible for fetching images from the [ApiService] and mapping them to domain models.
+ *
+ * @property apiService The [ApiService] instance used to fetch images.
+ */
+class ImageRepositoryImpl(
+    private val apiService: ApiService
+) : ImageRepository {
+
+    override suspend fun getImages(page: Int, limit: Int): List<Image> {
+        return apiService.getImages(page, limit).map { it.toDomain() }
     }
 }
