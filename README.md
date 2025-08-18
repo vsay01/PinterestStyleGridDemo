@@ -12,6 +12,10 @@ A sample Android application demonstrating how to build a Pinterest-style (stagg
 *   **Clean Architecture (MVVM-like):** Follows a structured architecture with distinct layers for UI, ViewModel, Domain (Use Cases), and Data (Repository, PagingSource, API Service).
 *   **Dependency Injection with Hilt.**
 
+## Demo
+
+https://youtube.com/shorts/RBt_C5iD_VU?si=85vys2zDusy9nQqD
+
 ## 📖 Branch Guide & Medium Articles
 
 This project was built incrementally. Each significant stage corresponds to a branch and a detailed Medium article:
