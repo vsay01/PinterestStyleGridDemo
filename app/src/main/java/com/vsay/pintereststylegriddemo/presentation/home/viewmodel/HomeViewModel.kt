@@ -1,4 +1,4 @@
-package com.vsay.pintereststylegriddemo.presentation.viewmodel
+package com.vsay.pintereststylegriddemo.presentation.home.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope

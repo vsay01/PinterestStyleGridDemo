@@ -20,4 +20,20 @@ interface ImageRepository {
      * @return A [Pager] of type [Int] (for page keys, typically page numbers) and [Image] (the data type being paged).
      */
     fun getPagedImages(): Pager<Int, Image>
+
+    /**
+     * Retrieves a specific image by its unique identifier.
+     *
+     * This function attempts to find and return an [Image] object
+     * corresponding to the provided [id]. If no image with the given
+     * ID is found, it returns `null`.
+     *
+     * This is a suspend function, indicating that it performs asynchronous
+     * operations (e.g., network request, database query) and should be
+     * called from a coroutine or another suspend function.
+     *
+     * @param id The unique identifier of the image to retrieve.
+     * @return The [Image] object if found, otherwise `null`.
+     */
+    suspend fun getImageById(id: String): Image?
 }
