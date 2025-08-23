@@ -1,5 +1,5 @@
 [versions]
-agp = "8.12.0"
+agp = "8.12.1"
 converterMoshi = "3.0.0"  # Updated to stable version
 hiltCompiler = "2.57"
 hiltNavigationCompose = "1.2.0"
@@ -20,6 +20,8 @@ pagingRuntime = "3.3.6"
 retrofit = "3.0.0"  # Updated to stable version
 kotlinxCoroutinesAndroid = "1.10.2"
 okhttp = "5.1.0" # Or the latest version of OkHttp
+navigationCompose = "2.9.3"
+material3 = "1.3.2"
 
 [libraries]
 accompanist-placeholder-material = { module = "com.google.accompanist:accompanist-placeholder-material", version.ref = "accompanistSystemuicontroller" }
@@ -50,6 +52,9 @@ retrofit-core = { group = "com.squareup.retrofit2", name = "retrofit", version.r
 kotlinx-coroutines-android = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-android", version.ref = "kotlinxCoroutinesAndroid" }
 okhttp-core = { group = "com.squareup.okhttp3", name = "okhttp", version.ref = "okhttp" }
 okhttp-loggingInterceptor = { group = "com.squareup.okhttp3", name = "logging-interceptor", version.ref = "okhttp" }
+
+androidx-navigation-compose = { group = "androidx.navigation", name = "navigation-compose", version.ref = "navigationCompose" }
+androidx-material3 = { group = "androidx.compose.material3", name = "material3", version.ref = "material3" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

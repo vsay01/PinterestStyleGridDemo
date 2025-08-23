@@ -64,7 +64,7 @@ object AppModule {
 
         // 4. Build Retrofit with the custom OkHttpClient and custom Moshi instance
         return Retrofit.Builder()
-            .baseUrl("https://picsum.photos/v2/")
+            .baseUrl("https://picsum.photos/")
             .client(okHttpClient)
             .addConverterFactory(MoshiConverterFactory.create(moshi)) // Pass custom Moshi
             .build()
