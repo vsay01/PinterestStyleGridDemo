@@ -1,9 +1,11 @@
 package com.vsay.pintereststylegriddemo.presentation.detail.viewmodel
 
+import android.app.Application
 import android.util.Log
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.vsay.pintereststylegriddemo.R
 import com.vsay.pintereststylegriddemo.domain.model.Image
 import com.vsay.pintereststylegriddemo.domain.usecase.GetImageByIdUseCase
 import com.vsay.pintereststylegriddemo.presentation.navigation.NavArgs
@@ -28,11 +30,13 @@ private const val TAG = "DetailViewModel"
  *
  * It also provides a [retry] function to attempt reloading the image if an error occurred.
  *
+ * @property application The application instance, injected by Hilt, used for accessing resources.
  * @property getImageByIdUseCase The use case for fetching image details.
  * @property savedStateHandle A handle to the saved state, used to retrieve navigation arguments.
  */
 @HiltViewModel
 class DetailViewModel @Inject constructor(
+    private val application: Application, // Injected Application context
     private val getImageByIdUseCase: GetImageByIdUseCase,
     savedStateHandle: SavedStateHandle
 ) : ViewModel() {
@@ -43,15 +47,13 @@ class DetailViewModel @Inject constructor(
     private var currentImageId: String? = null
 
     init {
-        val imageIdFromNav: String? = savedStateHandle.get<String>(NavArgs.IMAGE_ID)
-        Log.d(TAG, "Retrieved Image ID from SavedStateHandle: $imageIdFromNav")
-        currentImageId = imageIdFromNav
+        val idFromArgs: String? = savedStateHandle.get<String>(NavArgs.IMAGE_ID)
+        this.currentImageId = idFromArgs // Assign to the class property for later use (e.g., retry)
 
-        if (currentImageId != null) {
-            loadImage(currentImageId!!)
+        if (idFromArgs.isNullOrBlank()) {
+            _uiState.value = UiState.Error(application.getString(R.string.error_invalid_or_missing_image_id))
         } else {
-            Log.e(TAG, "Image ID is null in SavedStateHandle. Cannot load image.")
-            _uiState.value = UiState.Error("Image ID not found.")
+            loadImage(idFromArgs)
         }
     }
 
@@ -77,11 +79,11 @@ class DetailViewModel @Inject constructor(
                     _uiState.value = UiState.Success(image)
                 } else {
                     Log.w(TAG, "Image not found for ID: $id")
-                    _uiState.value = UiState.Error("Image not found.")
+                    _uiState.value = UiState.Error("Image not found.") // Consider using string resource
                 }
             } catch (e: Exception) {
                 Log.e(TAG, "Failed to load image with ID: $id", e)
-                _uiState.value = UiState.Error("Failed to load image: ${e.localizedMessage}")
+                _uiState.value = UiState.Error("Failed to load image: ${e.localizedMessage}") // Consider using string resource
             }
         }
     }
@@ -96,7 +98,8 @@ class DetailViewModel @Inject constructor(
             loadImage(currentImageId!!)
         } else {
             Log.e(TAG, "Cannot retry: Image ID is null.")
-            _uiState.value = UiState.Error("Cannot retry: Image ID is unknown.")
+            // Use the injected application to get the string
+            _uiState.value = UiState.Error(application.getString(R.string.error_invalid_or_missing_image_id))
         }
     }
 }

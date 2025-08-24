@@ -7,6 +7,7 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
+import androidx.navigation.navDeepLink
 import com.vsay.pintereststylegriddemo.presentation.app.AppViewModel
 import com.vsay.pintereststylegriddemo.presentation.detail.ui.DetailScreen
 import com.vsay.pintereststylegriddemo.presentation.home.ui.HomeScreen
@@ -46,7 +47,8 @@ fun AppNavHost(
             arguments = listOf(navArgument(NavArgs.IMAGE_ID) {
                 type = NavType.StringType
                 // nullable = true // Consider if imageId can ever be null, though unlikely for a detail screen
-            })
+            }),
+            deepLinks = listOf(navDeepLink { uriPattern = "myapp://detail/{${NavArgs.IMAGE_ID}}" })
         ) {
             DetailScreen(
                 appViewModel = appViewModel,

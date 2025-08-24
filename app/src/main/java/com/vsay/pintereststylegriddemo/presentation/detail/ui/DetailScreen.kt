@@ -1,5 +1,6 @@
 package com.vsay.pintereststylegriddemo.presentation.detail.ui
 
+// Material 3 imports
 import android.util.Log
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -12,7 +13,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-// Material 3 imports
 import androidx.compose.material3.Button
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
@@ -29,6 +29,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalUriHandler
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDecoration
@@ -40,15 +41,16 @@ import coil.compose.AsyncImage
 import coil.compose.AsyncImagePainter
 import coil.request.ImageRequest
 import com.google.accompanist.placeholder.PlaceholderHighlight
-import com.google.accompanist.placeholder.material.placeholder // Accompanist placeholder
+import com.google.accompanist.placeholder.material.placeholder
 import com.google.accompanist.placeholder.material.shimmer
+import com.vsay.pintereststylegriddemo.R
 import com.vsay.pintereststylegriddemo.domain.model.Image
 import com.vsay.pintereststylegriddemo.presentation.app.AppViewModel
 import com.vsay.pintereststylegriddemo.presentation.common.TopAppBarConfig
 import com.vsay.pintereststylegriddemo.presentation.detail.viewmodel.DetailViewModel
 import com.vsay.pintereststylegriddemo.presentation.detail.viewmodel.UiState
 import com.vsay.pintereststylegriddemo.presentation.navigation.NavigationIconType
-import com.vsay.pintereststylegriddemo.ui.theme.PinterestStyleGridDemoTheme // Your M3 Theme
+import com.vsay.pintereststylegriddemo.ui.theme.PinterestStyleGridDemoTheme
 
 private const val TAG = "DetailScreen"
 
@@ -71,13 +73,14 @@ fun DetailScreen(
     viewModel: DetailViewModel = hiltViewModel()
 ) {
     val uiState by viewModel.uiState.collectAsState()
+    val context = LocalContext.current // Get context for string resources
 
     LaunchedEffect(uiState, navController) { // Key on uiState to update title
         val currentImage = (uiState as? UiState.Success<Image>)?.data
         Log.d(TAG, "Updating TopAppBar for DetailScreen. Image author: ${currentImage?.author}")
         appViewModel.showTopAppBar(
             TopAppBarConfig(
-                title = currentImage?.author ?: "Details",
+                title = currentImage?.author ?: context.getString(R.string.details_screen_title),
                 navigationIconType = NavigationIconType.BACK,
                 onNavigationIconClick = {
                     Log.d(TAG, "Back button clicked on DetailScreen")
@@ -93,10 +96,14 @@ fun DetailScreen(
             is UiState.Loading -> {
                 CircularProgressIndicator(modifier = Modifier.align(Alignment.Center)) // M3 CircularProgressIndicator
             }
+
             is UiState.Success -> {
                 DetailScreenUI(image = state.data) // state.data is Image?
             }
+
             is UiState.Error -> {
+                val specificErrorMessage =
+                    stringResource(id = R.string.error_invalid_or_missing_image_id)
                 Column(
                     modifier = Modifier
                         .fillMaxSize()
@@ -111,8 +118,11 @@ fun DetailScreen(
                         style = MaterialTheme.typography.bodyLarge,
                         modifier = Modifier.padding(bottom = 8.dp)
                     )
-                    Button(onClick = { viewModel.retry() }) { // M3 Button
-                        Text("Retry")
+                    // Only show Retry button if the error message is NOT the specific one
+                    if (state.message != specificErrorMessage) {
+                        Button(onClick = { viewModel.retry() }) { // M3 Button
+                            Text(stringResource(id = R.string.button_retry))
+                        }
                     }
                 }
             }
@@ -135,7 +145,10 @@ fun DetailScreenUI(
 ) {
     if (image == null) {
         Box(modifier = modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-            Text("Image data not available.", style = MaterialTheme.typography.bodyLarge) // M3 Text
+            Text(
+                stringResource(id = R.string.image_data_not_available),
+                style = MaterialTheme.typography.bodyLarge
+            ) // M3 Text
         }
         return
     }
@@ -152,7 +165,10 @@ fun DetailScreenUI(
                 .data(image.downloadURL) // Ensure this is the direct displayable URL
                 .crossfade(true)
                 .build(),
-            contentDescription = "Image by ${image.author}",
+            contentDescription = stringResource(
+                id = R.string.content_description_image_by_author,
+                image.author ?: stringResource(id = R.string.unknown_author)
+            ),
             modifier = Modifier
                 .fillMaxWidth()
                 .aspectRatio(image.width.toFloat() / image.height.toFloat().coerceAtLeast(1f))
@@ -170,14 +186,23 @@ fun DetailScreenUI(
 
         Spacer(modifier = Modifier.height(16.dp))
 
-        DetailAttributeRow(label = "ID", value = image.id)
-        DetailAttributeRow(label = "Author", value = image.author)
-        DetailAttributeRow(label = "Width", value = "${image.width} px")
-        DetailAttributeRow(label = "Height", value = "${image.height} px")
+        DetailAttributeRow(label = stringResource(id = R.string.label_id), value = image.id)
+        DetailAttributeRow(
+            label = stringResource(id = R.string.label_author),
+            value = image.author ?: stringResource(id = R.string.unknown_author)
+        )
+        DetailAttributeRow(
+            label = stringResource(id = R.string.label_width),
+            value = stringResource(id = R.string.label_pixels_value, image.width)
+        )
+        DetailAttributeRow(
+            label = stringResource(id = R.string.label_height),
+            value = stringResource(id = R.string.label_pixels_value, image.height)
+        )
 
         val uriHandler = LocalUriHandler.current
         DetailAttributeRow(
-            label = "Download URL",
+            label = stringResource(id = R.string.label_download_url),
             value = image.downloadURL,
             isClickableValue = true,
             onValueClick = {
@@ -270,12 +295,14 @@ fun DetailScreenLoadingStatePreview() {
     }
 }
 
-@Preview(showBackground = true, name = "Detail Screen - Error State (Simulated)")
+@Preview(showBackground = true, name = "Detail Screen - Error State (Simulated - General)")
 @Composable
-fun DetailScreenErrorStatePreview() {
+fun DetailScreenErrorStateGeneralPreview() {
     PinterestStyleGridDemoTheme {
         Column(
-            modifier = Modifier.fillMaxSize().padding(16.dp),
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(16.dp),
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
@@ -288,6 +315,30 @@ fun DetailScreenErrorStatePreview() {
             Button(onClick = { /* No action in preview */ }) {
                 Text("Retry")
             }
+        }
+    }
+}
+
+@Preview(showBackground = true, name = "Detail Screen - Error State (Invalid ID)")
+@Composable
+fun DetailScreenErrorStateInvalidIdPreview() {
+    val context = LocalContext.current
+    PinterestStyleGridDemoTheme {
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(16.dp),
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            Text(
+                // Simulating the specific error message from strings.xml
+                text = context.getString(R.string.error_invalid_or_missing_image_id),
+                color = MaterialTheme.colorScheme.error,
+                textAlign = TextAlign.Center,
+                modifier = Modifier.padding(bottom = 8.dp)
+            )
+            // Retry button should NOT appear here
         }
     }
 }
