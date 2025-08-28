@@ -8,7 +8,7 @@ import androidx.lifecycle.viewModelScope
 import com.vsay.pintereststylegriddemo.R
 import com.vsay.pintereststylegriddemo.domain.model.Image
 import com.vsay.pintereststylegriddemo.domain.usecase.GetImageByIdUseCase
-import com.vsay.pintereststylegriddemo.presentation.navigation.NavArgs
+import com.vsay.pintereststylegriddemo.common.navigation.NavArgs
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow

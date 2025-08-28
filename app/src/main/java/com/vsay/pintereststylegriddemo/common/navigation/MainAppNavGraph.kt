@@ -1,11 +1,10 @@
-package com.vsay.pintereststylegriddemo.presentation.navigation
+package com.vsay.pintereststylegriddemo.common.navigation
 
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
+import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
-import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.compose.navigation
 import androidx.navigation.navArgument
 import androidx.navigation.navDeepLink
 import com.vsay.pintereststylegriddemo.presentation.app.AppViewModel
@@ -13,37 +12,29 @@ import com.vsay.pintereststylegriddemo.presentation.detail.ui.DetailScreen
 import com.vsay.pintereststylegriddemo.presentation.home.ui.HomeScreen
 
 /**
- * Composable function that defines the navigation graph for the application.
+ * Defines the main application navigation graph.
  *
- * It uses a [NavHost] to manage navigation between different screens.
- * The `startDestination` is set to [Screen.Home].
+ * This graph includes screens like Home and Detail.
  *
  * @param navController The [NavHostController] used for navigation.
- * @param appViewModel The [AppViewModel] shared across different screens.
- * @param modifier Optional [Modifier] to be applied to the NavHost.
+ * @param appViewModel The [AppViewModel] shared across the application.
  */
-@Composable
-fun AppNavHost(
-    navController: NavHostController,
-    appViewModel: AppViewModel,
-    modifier: Modifier = Modifier
-) {
-    NavHost(
-        navController = navController,
-        startDestination = Screen.Home.route,
-        modifier = modifier
+fun NavGraphBuilder.mainAppGraph(navController: NavHostController, appViewModel: AppViewModel) {
+    navigation(
+        startDestination = AppRoute.Main.Home.route, // Actual start screen of this graph
+        route = AppRoute.MainAppGraph.route          // The route for this entire graph
     ) {
-        composable(Screen.Home.route) {
+        composable(AppRoute.Main.Home.route) {
             HomeScreen(
                 appViewModel = appViewModel,
                 // homeViewModel is hiltViewModel() internally
                 onImageClick = { image ->
-                    navController.navigate(Screen.Detail.createRoute(image.id))
+                    navController.navigate(AppRoute.Main.Detail.createRoute(image.id))
                 }
             )
         }
         composable(
-            route = Screen.Detail.route,
+            route = AppRoute.Main.Detail.route,
             arguments = listOf(navArgument(NavArgs.IMAGE_ID) {
                 type = NavType.StringType
                 // nullable = true // Consider if imageId can ever be null, though unlikely for a detail screen

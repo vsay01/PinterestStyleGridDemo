@@ -44,12 +44,13 @@ import com.google.accompanist.placeholder.PlaceholderHighlight
 import com.google.accompanist.placeholder.material.placeholder
 import com.google.accompanist.placeholder.material.shimmer
 import com.vsay.pintereststylegriddemo.R
+import com.vsay.pintereststylegriddemo.common.navigation.AppRoute
 import com.vsay.pintereststylegriddemo.domain.model.Image
 import com.vsay.pintereststylegriddemo.presentation.app.AppViewModel
 import com.vsay.pintereststylegriddemo.presentation.common.TopAppBarConfig
 import com.vsay.pintereststylegriddemo.presentation.detail.viewmodel.DetailViewModel
 import com.vsay.pintereststylegriddemo.presentation.detail.viewmodel.UiState
-import com.vsay.pintereststylegriddemo.presentation.navigation.NavigationIconType
+import com.vsay.pintereststylegriddemo.ui.common.NavigationIconType
 import com.vsay.pintereststylegriddemo.ui.theme.PinterestStyleGridDemoTheme
 
 private const val TAG = "DetailScreen"
@@ -98,7 +99,12 @@ fun DetailScreen(
             }
 
             is UiState.Success -> {
-                DetailScreenUI(image = state.data) // state.data is Image?
+                DetailScreenUI(
+                    image = state.data,
+                    onNavigateToProfile = {
+                        navController.navigate(AppRoute.Profile.ProfileRoot.route)
+                    }
+                ) // state.data is Image?
             }
 
             is UiState.Error -> {
@@ -141,7 +147,8 @@ fun DetailScreen(
 @Composable
 fun DetailScreenUI(
     image: Image?,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    onNavigateToProfile: () -> Unit
 ) {
     if (image == null) {
         Box(modifier = modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
@@ -209,6 +216,17 @@ fun DetailScreenUI(
                 uriHandler.openUri(image.downloadURL)
             }
         )
+
+        Spacer(modifier = Modifier.height(16.dp)) // Add some space before the new button
+
+        // vvv NEW BUTTON FOR CROSS-GRAPH NAVIGATION vvv
+        Button(
+            onClick = onNavigateToProfile, // Use the new lambda
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            Text("View Profile Section")
+        }
+        // ^^^ NEW BUTTON FOR CROSS-GRAPH NAVIGATION ^^^
     }
 }
 
@@ -228,7 +246,7 @@ private fun DetailAttributeRow(
     label: String,
     value: String,
     isClickableValue: Boolean = false,
-    onValueClick: (() -> Unit)? = null
+    onValueClick: (() -> Unit)? = null,
 ) {
     Row(
         modifier = Modifier.fillMaxWidth(),
@@ -272,7 +290,8 @@ fun DetailScreenUILoadedPreview() {
                 width = 600,
                 height = 400,
                 downloadURL = "https://picsum.photos/id/0/5000/3333"
-            )
+            ),
+            onNavigateToProfile = {}
         )
     }
 }
@@ -281,7 +300,7 @@ fun DetailScreenUILoadedPreview() {
 @Composable
 fun DetailScreenUIImageNullPreview() {
     PinterestStyleGridDemoTheme {
-        DetailScreenUI(image = null)
+        DetailScreenUI(image = null, onNavigateToProfile = {})
     }
 }
 
