@@ -60,7 +60,7 @@ import com.vsay.pintereststylegriddemo.domain.model.Image
 import com.vsay.pintereststylegriddemo.presentation.app.AppViewModel
 import com.vsay.pintereststylegriddemo.presentation.common.TopAppBarConfig
 import com.vsay.pintereststylegriddemo.presentation.home.viewmodel.HomeViewModel
-import com.vsay.pintereststylegriddemo.presentation.navigation.NavigationIconType
+import com.vsay.pintereststylegriddemo.ui.common.NavigationIconType
 import kotlinx.coroutines.launch
 
 private const val TAG = "HomeScreen"

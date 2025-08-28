@@ -24,4 +24,7 @@
     <string name="label_height">Height</string>
     <string name="label_pixels_value">%1$d px</string>
     <string name="label_download_url">Download URL</string>
+    <string name="bottom_nav_home">Home</string>
+    <string name="bottom_nav_bookmark">Bookmark</string>
+    <string name="bottom_nav_profile">Profile</string>
 </resources>
