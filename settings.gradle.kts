@@ -21,4 +21,5 @@ dependencyResolutionManagement {
 
 rootProject.name = "PinterestStyleGridDemo"
 include(":app")
+includeBuild("convention-plugins")
  
