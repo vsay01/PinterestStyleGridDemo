@@ -1,4 +1,3 @@
-// This is convention-plugins/settings.gradle.kts
 rootProject.name = "pinterest-convention-plugins"
 
 dependencyResolutionManagement {

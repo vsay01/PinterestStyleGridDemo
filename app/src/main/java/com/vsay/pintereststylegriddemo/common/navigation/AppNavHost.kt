@@ -5,6 +5,7 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import com.vsay.pintereststylegriddemo.presentation.app.AppViewModel
+import com.vsay.pintereststylegriddemo.feature_bookmarks.ui.bookmarkNavGraph
 
 /**
  * Composable function that defines the navigation graph for the application.
@@ -29,7 +30,7 @@ fun AppNavHost(
         modifier = modifier
     ) {
         mainAppGraph(navController, appViewModel) // Corresponds to BottomNavItem.Home.route
-        bookmarkGraph(navController, appViewModel)  // Corresponds to BottomNavItem.Search.route
+        bookmarkNavGraph()  // Corresponds to BottomNavItem.Bookmark.route
         profileGraph(navController, appViewModel) // Corresponds to BottomNavItem.Profile.route
     }
 }

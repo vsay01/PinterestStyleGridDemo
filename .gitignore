@@ -8,8 +8,20 @@
 /.idea/navEditor.xml
 /.idea/assetWizardSettings.xml
 .DS_Store
+
+# Root build folder
 /build
+
+# Module-specific build folders
+/app/build
+/feature-bookmarks/build
+/convention-plugins/build
+
+# Captures and other generated files
 /captures
 .externalNativeBuild
 .cxx
 local.properties
+
+# IntelliJ / Android Studio
+.idea/
