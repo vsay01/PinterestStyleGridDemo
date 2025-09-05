@@ -45,7 +45,7 @@ import com.google.accompanist.placeholder.material.placeholder
 import com.google.accompanist.placeholder.material.shimmer
 import com.vsay.pintereststylegriddemo.R
 import com.vsay.pintereststylegriddemo.common.navigation.AppRoute
-import com.vsay.pintereststylegriddemo.domain.model.Image
+import com.vsay.pintereststylegriddemo.core.domain.model.Image
 import com.vsay.pintereststylegriddemo.presentation.app.AppViewModel
 import com.vsay.pintereststylegriddemo.presentation.common.TopAppBarConfig
 import com.vsay.pintereststylegriddemo.presentation.detail.viewmodel.DetailViewModel

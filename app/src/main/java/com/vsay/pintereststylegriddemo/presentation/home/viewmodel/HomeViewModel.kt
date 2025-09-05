@@ -4,8 +4,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
-import com.vsay.pintereststylegriddemo.domain.model.Image
-import com.vsay.pintereststylegriddemo.domain.usecase.GetImagesUseCase
+import com.vsay.pintereststylegriddemo.core.domain.model.Image
+import com.vsay.pintereststylegriddemo.core.domain.usecase.GetImagesUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import jakarta.inject.Inject
 import kotlinx.coroutines.flow.Flow

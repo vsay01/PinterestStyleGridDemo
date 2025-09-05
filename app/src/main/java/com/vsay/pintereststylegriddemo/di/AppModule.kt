@@ -3,10 +3,11 @@ package com.vsay.pintereststylegriddemo.di
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import com.vsay.pintereststylegriddemo.BuildConfig
+import com.vsay.pintereststylegriddemo.core.domain.repository.ImageRepository
+import com.vsay.pintereststylegriddemo.core.domain.usecase.GetImageByIdUseCase
+import com.vsay.pintereststylegriddemo.core.domain.usecase.GetImagesUseCase
 import com.vsay.pintereststylegriddemo.data.remote.ApiService
 import com.vsay.pintereststylegriddemo.data.repository.ImageRepositoryImpl
-import com.vsay.pintereststylegriddemo.domain.repository.ImageRepository
-import com.vsay.pintereststylegriddemo.domain.usecase.GetImagesUseCase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -112,4 +113,9 @@ object AppModule {
     @Singleton
     fun provideGetImagesUseCase(repository: ImageRepository): GetImagesUseCase =
         GetImagesUseCase(repository)
+
+    @Provides
+    @Singleton
+    fun provideGetImageByIdUseCase(repository: ImageRepository): GetImageByIdUseCase =
+        GetImageByIdUseCase(repository)
 }

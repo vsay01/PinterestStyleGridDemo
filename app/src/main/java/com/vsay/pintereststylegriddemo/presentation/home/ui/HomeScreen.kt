@@ -1,6 +1,5 @@
 package com.vsay.pintereststylegriddemo.presentation.home.ui
 
-// import com.vsay.pintereststylegriddemo.common.permission.launchAppSettings // Not directly used here anymore, but good to keep if other parts of HomeScreen might need it.
 import android.Manifest
 import android.os.Build
 import android.util.Log
@@ -56,7 +55,7 @@ import com.google.accompanist.placeholder.material.shimmer
 import com.vsay.pintereststylegriddemo.R
 import com.vsay.pintereststylegriddemo.common.notification.NotificationHelper
 import com.vsay.pintereststylegriddemo.common.permission.rememberPermissionHandler
-import com.vsay.pintereststylegriddemo.domain.model.Image
+import com.vsay.pintereststylegriddemo.core.domain.model.Image
 import com.vsay.pintereststylegriddemo.presentation.app.AppViewModel
 import com.vsay.pintereststylegriddemo.presentation.common.TopAppBarConfig
 import com.vsay.pintereststylegriddemo.presentation.home.viewmodel.HomeViewModel

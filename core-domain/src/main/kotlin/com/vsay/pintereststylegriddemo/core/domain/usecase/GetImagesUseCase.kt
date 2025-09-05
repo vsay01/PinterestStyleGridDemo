@@ -1,8 +1,8 @@
-package com.vsay.pintereststylegriddemo.domain.usecase
+package com.vsay.pintereststylegriddemo.core.domain.usecase
 
 import androidx.paging.PagingData
-import com.vsay.pintereststylegriddemo.domain.model.Image
-import com.vsay.pintereststylegriddemo.domain.repository.ImageRepository
+import com.vsay.pintereststylegriddemo.core.domain.model.Image
+import com.vsay.pintereststylegriddemo.core.domain.repository.ImageRepository
 import kotlinx.coroutines.flow.Flow
 
 /**
@@ -18,6 +18,6 @@ import kotlinx.coroutines.flow.Flow
  */
 class GetImagesUseCase(private val repository: ImageRepository) {
     operator fun invoke(): Flow<PagingData<Image>> {
-        return repository.getPagedImages().flow
+        return repository.getPagedImages()
     }
 }

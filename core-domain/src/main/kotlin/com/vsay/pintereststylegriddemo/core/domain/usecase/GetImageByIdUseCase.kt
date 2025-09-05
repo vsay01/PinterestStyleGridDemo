@@ -1,8 +1,8 @@
-package com.vsay.pintereststylegriddemo.domain.usecase
+package com.vsay.pintereststylegriddemo.core.domain.usecase
 
-import com.vsay.pintereststylegriddemo.domain.model.Image
-import com.vsay.pintereststylegriddemo.domain.repository.ImageRepository
-import javax.inject.Inject
+import com.vsay.pintereststylegriddemo.core.domain.model.Image // Corrected
+import com.vsay.pintereststylegriddemo.core.domain.repository.ImageRepository // Corrected
+// import javax.inject.Inject // Removed
 
 /**
  * Use case for fetching a single image by its unique identifier.
@@ -12,7 +12,7 @@ import javax.inject.Inject
  *
  * @property repository The repository responsible for image data operations.
  */
-class GetImageByIdUseCase @Inject constructor(
+class GetImageByIdUseCase( // @Inject removed
     private val repository: ImageRepository
 ) {
 

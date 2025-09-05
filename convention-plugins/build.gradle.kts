@@ -19,7 +19,11 @@ gradlePlugin {
     plugins {
         register("androidLibrary") {
             id = "pinterest.android-library-convention"
-            implementationClass = "AndroidLibraryConventionPlugin"
+            implementationClass = "com.vsay.pintereststylegriddemo.AndroidLibraryConventionPlugin"
+        }
+        register("kotlinLibrary") {
+            id = "pinterest.kotlin-library-convention"
+            implementationClass = "com.vsay.pintereststylegriddemo.KotlinLibraryConventionPlugin"
         }
         // Register other plugins here
     }

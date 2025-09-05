@@ -2,9 +2,9 @@ package com.vsay.pintereststylegriddemo.data.paging
 
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
+import com.vsay.pintereststylegriddemo.core.domain.model.Image
 import com.vsay.pintereststylegriddemo.data.model.toDomain
 import com.vsay.pintereststylegriddemo.data.remote.ApiService
-import com.vsay.pintereststylegriddemo.domain.model.Image
 
 /**
  * A [PagingSource] that loads images from the [ApiService].

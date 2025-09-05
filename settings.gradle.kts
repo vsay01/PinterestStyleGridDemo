@@ -23,3 +23,9 @@ rootProject.name = "PinterestStyleGridDemo"
 include(":app")
 includeBuild("convention-plugins")
 include(":feature-bookmarks")
+
+include(":core-ui")
+include(":core-navigation")
+include(":core-common")
+include(":core-domain")
+include(":core-data")

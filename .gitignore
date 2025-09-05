@@ -25,3 +25,6 @@ local.properties
 
 # IntelliJ / Android Studio
 .idea/
+
+# Core domain
+/core-domain/build
