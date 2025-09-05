@@ -1,10 +1,11 @@
-package com.vsay.pintereststylegriddemo.data.paging
+package com.vsay.pintereststylegriddemo.core.data.paging
 
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
+import com.vsay.pintereststylegriddemo.core.data.model.toDomain
+import com.vsay.pintereststylegriddemo.core.data.remote.ApiService
 import com.vsay.pintereststylegriddemo.core.domain.model.Image
-import com.vsay.pintereststylegriddemo.data.model.toDomain
-import com.vsay.pintereststylegriddemo.data.remote.ApiService
+import kotlin.collections.map
 
 /**
  * A [PagingSource] that loads images from the [ApiService].
@@ -43,3 +44,4 @@ class ImagePagingSource(
         }
     }
 }
+

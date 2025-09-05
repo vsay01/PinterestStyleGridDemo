@@ -1,4 +1,4 @@
-package com.vsay.pintereststylegriddemo.data.model
+package com.vsay.pintereststylegriddemo.core.data.model
 
 import com.vsay.pintereststylegriddemo.core.domain.model.Image
 import kotlin.random.Random

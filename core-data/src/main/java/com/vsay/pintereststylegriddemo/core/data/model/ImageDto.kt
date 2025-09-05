@@ -1,4 +1,4 @@
-package com.vsay.pintereststylegriddemo.data.model
+package com.vsay.pintereststylegriddemo.core.data.model // Updated package
 
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass

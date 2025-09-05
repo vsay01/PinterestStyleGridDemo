@@ -1,6 +1,6 @@
-package com.vsay.pintereststylegriddemo.data.remote
+package com.vsay.pintereststylegriddemo.core.data.remote // Updated package
 
-import com.vsay.pintereststylegriddemo.data.model.ImageDto
+import com.vsay.pintereststylegriddemo.core.data.model.ImageDto
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query

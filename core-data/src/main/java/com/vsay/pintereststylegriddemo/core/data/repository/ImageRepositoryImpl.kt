@@ -1,21 +1,24 @@
-package com.vsay.pintereststylegriddemo.data.repository
+package com.vsay.pintereststylegriddemo.core.data.repository
 
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
-import com.vsay.pintereststylegriddemo.data.model.toDomain // Ensure this maps to core.domain.model.Image
-import com.vsay.pintereststylegriddemo.data.paging.ImagePagingSource // Ensure this uses core.domain.model.Image
-import com.vsay.pintereststylegriddemo.data.remote.ApiService
-import com.vsay.pintereststylegriddemo.core.domain.model.Image // Updated import
-import com.vsay.pintereststylegriddemo.core.domain.repository.ImageRepository // Updated import
+import com.vsay.pintereststylegriddemo.core.data.model.toDomain
+import com.vsay.pintereststylegriddemo.core.data.paging.ImagePagingSource
+import com.vsay.pintereststylegriddemo.core.data.remote.ApiService
+import com.vsay.pintereststylegriddemo.core.domain.model.Image
+import com.vsay.pintereststylegriddemo.core.domain.repository.ImageRepository
 import kotlinx.coroutines.flow.Flow
+import javax.inject.Inject // Added Hilt's Inject annotation
+import javax.inject.Singleton // Added Singleton for consistency if provided as such
 
 /**
  * Implementation of [ImageRepository] that fetches image data from the [ApiService].
  *
  * @property apiService The remote service to fetch image data from.
  */
-class ImageRepositoryImpl(
+@Singleton // Marks this as a singleton, common for repositories
+class ImageRepositoryImpl @Inject constructor( // Added @Inject for Hilt
     private val apiService: ApiService
 ) : ImageRepository {
 
@@ -27,14 +30,14 @@ class ImageRepositoryImpl(
      *
      * @return A [Flow] of [PagingData] for [Image] objects, keyed by page number (Int).
      */
-    override fun getPagedImages(): Flow<PagingData<Image>> { // Updated return type
+    override fun getPagedImages(): Flow<PagingData<Image>> {
         return Pager(
             config = PagingConfig(
                 pageSize = 10,
                 enablePlaceholders = false
             ),
-            pagingSourceFactory = { ImagePagingSource(apiService) } // This PagingSource needs to produce core.domain.model.Image
-        ).flow // Expose the Flow
+            pagingSourceFactory = { ImagePagingSource(apiService) }
+        ).flow
     }
 
     /**
@@ -46,8 +49,8 @@ class ImageRepositoryImpl(
      * @param id The unique identifier of the image to fetch.
      * @return The [Image] object if found, or null if the image does not exist or an error occurs.
      */
-    override suspend fun getImageById(id: String): Image? { // Image type now refers to core.domain.model.Image
+    override suspend fun getImageById(id: String): Image? {
         val response = apiService.getImageDetailsById(id)
-        return response?.toDomain() // This toDomain() needs to return core.domain.model.Image
+        return response?.toDomain()
     }
 }
