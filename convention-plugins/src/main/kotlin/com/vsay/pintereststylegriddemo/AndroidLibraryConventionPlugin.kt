@@ -19,12 +19,13 @@ class AndroidLibraryConventionPlugin : Plugin<Project> {
             val libs = extensions.getByType<VersionCatalogsExtension>()
                 .named("libs")
 
-            plugins.apply("com.android.library")
-            plugins.apply("org.jetbrains.kotlin.android")
+            plugins.apply(libs.findPlugin("android-library").get().get().pluginId)
+            plugins.apply(libs.findPlugin("kotlin-android").get().get().pluginId)
+            plugins.apply("dagger.hilt.android.plugin") // <-- ADDED Hilt plugin
+            plugins.apply("org.jetbrains.kotlin.kapt")    // <-- ADDED Kapt for Hilt
+            plugins.apply(libs.findPlugin("kotlin-compose").get().get().pluginId)
 
             extensions.configure<LibraryExtension> {
-                // 'libs' is now correctly typed as VersionCatalog and available from above
-
                 compileSdk = libs.findVersion("compileSdk").get().requiredVersion.toInt()
                 defaultConfig {
                     minSdk = libs.findVersion("minSdk").get().requiredVersion.toInt()
@@ -42,8 +43,7 @@ class AndroidLibraryConventionPlugin : Plugin<Project> {
                     }
                 }
 
-                // Get Java version from libs
-                val javaVersionFromToml = libs.findVersion("java").get().requiredVersion // e.g., "1.8", "11"
+                val javaVersionFromToml = libs.findVersion("java").get().requiredVersion
                 val javaVersionForCompileOptions = JavaVersion.toVersion(javaVersionFromToml)
                 compileOptions {
                     sourceCompatibility = javaVersionForCompileOptions
@@ -58,23 +58,21 @@ class AndroidLibraryConventionPlugin : Plugin<Project> {
                     kotlinCompilerExtensionVersion =
                         libs.findVersion("composeCompiler").get().requiredVersion
                 }
-                
+
                 lint {
-                    abortOnError = true // Fail the build on lint errors
+                    abortOnError = true
                     warningsAsErrors = true
                     checkDependencies = true
                 }
             }
 
-            // Configure Kotlin JVM toolchain (JDK for compilation)
             project.extensions.getByType(KotlinAndroidProjectExtension::class.java).jvmToolchain(
-                libs.findVersion("jvmTarget").get().requiredVersion.toInt() // e.g., jvmTarget = "8" or "11" in TOML -> results in 8 or 11
+                libs.findVersion("jvmTarget").get().requiredVersion.toInt()
             )
 
-            // Configure Kotlin compiler options (bytecode target)
             project.tasks.withType(KotlinCompile::class.java).configureEach {
                 compilerOptions {
-                    val javaVersionFromTomlForKotlin = libs.findVersion("java").get().requiredVersion // e.g., "1.8", "11"
+                    val javaVersionFromTomlForKotlin = libs.findVersion("java").get().requiredVersion
                     jvmTarget.set(JvmTarget.fromTarget(javaVersionFromTomlForKotlin))
                 }
             }
@@ -87,11 +85,15 @@ class AndroidLibraryConventionPlugin : Plugin<Project> {
                 add("implementation", libs.findLibrary("material").get())
                 add("implementation", libs.findLibrary("androidx-material3").get())
 
-
                 add("implementation", libs.findLibrary("androidx-compose-ui").get())
                 add("implementation", libs.findLibrary("androidx-compose-ui-tooling").get())
                 add("implementation", libs.findLibrary("androidx-compose-ui-tooling-preview").get())
                 add("implementation", libs.findLibrary("androidx-navigation-compose").get())
+
+                // Hilt Dependencies
+                add("implementation", libs.findLibrary("hilt-android").get())
+                add("implementation", libs.findLibrary("androidx-hilt-navigation-compose").get())
+                add("kapt", libs.findLibrary("hilt-compiler").get())
             }
         }
     }
