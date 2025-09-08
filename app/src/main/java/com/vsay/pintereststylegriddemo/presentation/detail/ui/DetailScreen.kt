@@ -44,8 +44,8 @@ import com.google.accompanist.placeholder.PlaceholderHighlight
 import com.google.accompanist.placeholder.material.placeholder
 import com.google.accompanist.placeholder.material.shimmer
 import com.vsay.pintereststylegriddemo.R
-import com.vsay.pintereststylegriddemo.common.navigation.AppRoute
 import com.vsay.pintereststylegriddemo.core.domain.model.Image
+import com.vsay.pintereststylegriddemo.core.navigation.AppRoutes
 import com.vsay.pintereststylegriddemo.presentation.app.AppViewModel
 import com.vsay.pintereststylegriddemo.presentation.common.TopAppBarConfig
 import com.vsay.pintereststylegriddemo.presentation.detail.viewmodel.DetailViewModel
@@ -102,7 +102,7 @@ fun DetailScreen(
                 DetailScreenUI(
                     image = state.data,
                     onNavigateToProfile = {
-                        navController.navigate(AppRoute.Profile.ProfileRoot.route)
+                        navController.navigate(AppRoutes.Profile.ProfileRoot.route)
                     }
                 ) // state.data is Image?
             }

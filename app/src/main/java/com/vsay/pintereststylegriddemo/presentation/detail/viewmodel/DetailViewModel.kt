@@ -6,7 +6,7 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.vsay.pintereststylegriddemo.R
-import com.vsay.pintereststylegriddemo.common.navigation.NavArgs
+import com.vsay.pintereststylegriddemo.core.navigation.NavArgs
 import com.vsay.pintereststylegriddemo.core.domain.model.Image
 import com.vsay.pintereststylegriddemo.core.domain.usecase.GetImageByIdUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel

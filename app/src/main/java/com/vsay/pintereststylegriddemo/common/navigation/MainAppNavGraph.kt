@@ -7,6 +7,8 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
 import androidx.navigation.navArgument
 import androidx.navigation.navDeepLink
+import com.vsay.pintereststylegriddemo.core.navigation.AppRoutes
+import com.vsay.pintereststylegriddemo.core.navigation.NavArgs
 import com.vsay.pintereststylegriddemo.presentation.app.AppViewModel
 import com.vsay.pintereststylegriddemo.presentation.detail.ui.DetailScreen
 import com.vsay.pintereststylegriddemo.presentation.home.ui.HomeScreen
@@ -21,20 +23,20 @@ import com.vsay.pintereststylegriddemo.presentation.home.ui.HomeScreen
  */
 fun NavGraphBuilder.mainAppGraph(navController: NavHostController, appViewModel: AppViewModel) {
     navigation(
-        startDestination = AppRoute.Main.Home.route, // Actual start screen of this graph
-        route = AppRoute.MainAppGraph.route          // The route for this entire graph
+        startDestination = AppRoutes.Main.Home.route, // Actual start screen of this graph
+        route = AppRoutes.MainAppGraph.route          // The route for this entire graph
     ) {
-        composable(AppRoute.Main.Home.route) {
+        composable(AppRoutes.Main.Home.route) {
             HomeScreen(
                 appViewModel = appViewModel,
                 // homeViewModel is hiltViewModel() internally
                 onImageClick = { image ->
-                    navController.navigate(AppRoute.Main.Detail.createRoute(image.id))
+                    navController.navigate(AppRoutes.Main.Detail.createRoute(image.id))
                 }
             )
         }
         composable(
-            route = AppRoute.Main.Detail.route,
+            route = AppRoutes.Main.Detail.route,
             arguments = listOf(navArgument(NavArgs.IMAGE_ID) {
                 type = NavType.StringType
                 // nullable = true // Consider if imageId can ever be null, though unlikely for a detail screen

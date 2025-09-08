@@ -34,4 +34,4 @@ include(":core-navigation")
 include(":core-common")
 include(":core-domain")
 include(":core-data")
-    
+include(":feature-home")

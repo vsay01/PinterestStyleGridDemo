@@ -25,10 +25,8 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.vsay.pintereststylegriddemo.R
 import com.vsay.pintereststylegriddemo.common.navigation.AppNavHost
-import com.vsay.pintereststylegriddemo.common.navigation.AppRoute
 import com.vsay.pintereststylegriddemo.common.navigation.BottomNavItem
-import com.vsay.pintereststylegriddemo.core.navigation.AppRoutes.BOOKMARKS_GRAPH_ROUTE
-import com.vsay.pintereststylegriddemo.core.navigation.AppRoutes.BOOKMARK_SCREEN_ROUTE
+import com.vsay.pintereststylegriddemo.core.navigation.AppRoutes
 import com.vsay.pintereststylegriddemo.presentation.app.AppViewModel
 import com.vsay.pintereststylegriddemo.presentation.common.TopAppBarConfig // Using your actual class
 import com.vsay.pintereststylegriddemo.ui.common.NavigationIconType
@@ -60,7 +58,7 @@ fun AppWithTopBar(
 
     LaunchedEffect(currentRoute) {
         when (currentRoute) {
-            BOOKMARK_SCREEN_ROUTE -> {
+            AppRoutes.Bookmark.BookmarkRoot.route -> {
                 appViewModel.updateTopAppBar(
                     TopAppBarConfig(
                         title = context.getString(com.vsay.pintereststylegriddemo.feature.bookmarks.R.string.bookmark_screen_title),
@@ -71,7 +69,7 @@ fun AppWithTopBar(
                     )
                 )
             }
-            AppRoute.Main.Home.route -> {
+            AppRoutes.Main.Home.route -> {
                 appViewModel.updateTopAppBar(
                     TopAppBarConfig(
                         title = context.getString(R.string.home_screen_title),
@@ -80,7 +78,7 @@ fun AppWithTopBar(
                     )
                 )
             }
-            AppRoute.Main.Detail.route -> {
+            AppRoutes.Main.Detail.route -> {
                 appViewModel.updateTopAppBar(
                     TopAppBarConfig(
                         title = context.getString(R.string.details_screen_title),
@@ -90,7 +88,7 @@ fun AppWithTopBar(
                     )
                 )
             }
-            // Add other routes from AppRoute that need specific TopAppBar configurations
+            // Add other routes from AppRoutes that need specific TopAppBar configurations
 
             else -> {
                 // If the route is not handled explicitly, hide the app bar.
@@ -151,7 +149,7 @@ fun AppWithTopBar(
                         label = { Text(screen.label) },
                         selected = currentDestination?.hierarchy?.any {
                             val isSelected = if (screen == BottomNavItem.Bookmark) {
-                                it.route == BOOKMARKS_GRAPH_ROUTE || currentRoute == BOOKMARK_SCREEN_ROUTE
+                                it.route == AppRoutes.BookmarkGraph.route || currentRoute == AppRoutes.Bookmark.BookmarkRoot.route
                             } else {
                                 it.route == screen.route
                             }
@@ -159,7 +157,7 @@ fun AppWithTopBar(
                         } == true,
                         onClick = {
                             val targetRoute = if (screen == BottomNavItem.Bookmark) {
-                                BOOKMARKS_GRAPH_ROUTE
+                                AppRoutes.BookmarkGraph.route
                             } else {
                                 screen.route
                             }
@@ -180,7 +178,7 @@ fun AppWithTopBar(
             navController = mainNavController,
             appViewModel = appViewModel,
             modifier = Modifier.padding(innerPadding),
-            startDestination = AppRoute.MainAppGraph.route
+            startDestination = AppRoutes.MainAppGraph.route
         )
     }
 }

@@ -22,7 +22,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.vsay.pintereststylegriddemo.R
-import com.vsay.pintereststylegriddemo.common.navigation.AppRoute
+import com.vsay.pintereststylegriddemo.core.navigation.AppRoutes
 import com.vsay.pintereststylegriddemo.presentation.app.AppViewModel
 import com.vsay.pintereststylegriddemo.presentation.common.TopAppBarConfig
 import com.vsay.pintereststylegriddemo.ui.common.NavigationIconType
@@ -60,7 +60,7 @@ fun ProfileScreen(
             Log.d(TAG, "Other General Settings clicked")
         },
         onGoToAccountSettings = {
-            navController.navigate(AppRoute.Profile.AccountSettingsGraph.route)
+            navController.navigate(AppRoutes.Profile.AccountSettingsGraph.route)
         },
         onLogoutClick = {
             // Placeholder for logout logic
