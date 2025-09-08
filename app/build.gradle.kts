@@ -48,10 +48,12 @@ android {
 }
 
 dependencies {
-    implementation(project(":feature-bookmarks"))
     implementation(project(":core-domain"))
     implementation(project(":core-data"))
     implementation(project(":core-navigation"))
+    implementation(project(":core-ui"))
+    implementation(project(":feature-home"))
+    implementation(project(":feature-bookmarks"))
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)

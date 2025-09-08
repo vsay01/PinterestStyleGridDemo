@@ -5,7 +5,7 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import com.vsay.pintereststylegriddemo.presentation.app.AppViewModel
-import com.vsay.pintereststylegriddemo.feature_bookmarks.ui.bookmarkNavGraph
+import com.vsay.pintereststylegriddemo.ui.bookmarkNavGraph
 
 /**
  * Composable function that defines the navigation graph for the application.

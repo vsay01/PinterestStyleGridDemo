@@ -24,8 +24,8 @@ import androidx.navigation.NavController
 import com.vsay.pintereststylegriddemo.R
 import com.vsay.pintereststylegriddemo.core.navigation.AppRoutes
 import com.vsay.pintereststylegriddemo.presentation.app.AppViewModel
-import com.vsay.pintereststylegriddemo.presentation.common.TopAppBarConfig
-import com.vsay.pintereststylegriddemo.ui.common.NavigationIconType
+import com.vsay.pintereststylegriddemo.common.TopAppBarConfig
+import com.vsay.pintereststylegriddemo.common.NavigationIconType
 import com.vsay.pintereststylegriddemo.ui.theme.PinterestStyleGridDemoTheme
 
 const val TAG = "ProfileScreen"

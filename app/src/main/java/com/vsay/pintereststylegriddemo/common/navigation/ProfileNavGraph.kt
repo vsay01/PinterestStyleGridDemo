@@ -7,6 +7,7 @@ import androidx.navigation.compose.navigation
 import com.vsay.pintereststylegriddemo.core.navigation.AppRoutes
 import com.vsay.pintereststylegriddemo.presentation.accountsettingoverview.ui.AccountSettingsOverviewScreen
 import com.vsay.pintereststylegriddemo.presentation.app.AppViewModel
+import com.vsay.pintereststylegriddemo.presentation.changepassword.ui.ChangePasswordScreen
 import com.vsay.pintereststylegriddemo.presentation.profile.ui.ProfileScreen
 
 /**

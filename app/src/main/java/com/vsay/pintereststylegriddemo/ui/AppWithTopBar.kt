@@ -28,8 +28,8 @@ import com.vsay.pintereststylegriddemo.common.navigation.AppNavHost
 import com.vsay.pintereststylegriddemo.common.navigation.BottomNavItem
 import com.vsay.pintereststylegriddemo.core.navigation.AppRoutes
 import com.vsay.pintereststylegriddemo.presentation.app.AppViewModel
-import com.vsay.pintereststylegriddemo.presentation.common.TopAppBarConfig // Using your actual class
-import com.vsay.pintereststylegriddemo.ui.common.NavigationIconType
+import com.vsay.pintereststylegriddemo.common.TopAppBarConfig // Using your actual class
+import com.vsay.pintereststylegriddemo.common.NavigationIconType
 
 /**
  * Composable function that sets up the main application UI, including the top app bar,

@@ -7,11 +7,12 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
 import androidx.navigation.navArgument
 import androidx.navigation.navDeepLink
+import com.vsay.pintereststylegriddemo.R
 import com.vsay.pintereststylegriddemo.core.navigation.AppRoutes
 import com.vsay.pintereststylegriddemo.core.navigation.NavArgs
 import com.vsay.pintereststylegriddemo.presentation.app.AppViewModel
 import com.vsay.pintereststylegriddemo.presentation.detail.ui.DetailScreen
-import com.vsay.pintereststylegriddemo.presentation.home.ui.HomeScreen
+import com.vsay.pintereststylegriddemo.ui.HomeScreen
 
 /**
  * Defines the main application navigation graph.
@@ -28,11 +29,13 @@ fun NavGraphBuilder.mainAppGraph(navController: NavHostController, appViewModel:
     ) {
         composable(AppRoutes.Main.Home.route) {
             HomeScreen(
-                appViewModel = appViewModel,
-                // homeViewModel is hiltViewModel() internally
                 onImageClick = { image ->
                     navController.navigate(AppRoutes.Main.Detail.createRoute(image.id))
-                }
+                },
+                onShowTopAppBar = { topAppBarConfig ->
+                    appViewModel.showTopAppBar(topAppBarConfig)
+                },
+                smallIconResId = R.mipmap.ic_launcher,
             )
         }
         composable(

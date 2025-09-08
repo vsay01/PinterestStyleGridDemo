@@ -1,0 +1,7 @@
+<resources>
+    <string name="notification_permission_rationale">Notification permission is needed to alert you about images. Please grant the permission in settings.</string>
+    <string name="notification_channel_name">Image Recommendations</string>
+    <string name="notification_channel_description">Notifications for recommended images.</string>
+    <string name="notification_title_image_from">Image from %1$s</string>
+    <string name="notification_text_tap_to_view">Tap to view details for image ID: %1$s</string>
+</resources>

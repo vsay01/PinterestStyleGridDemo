@@ -14,13 +14,22 @@
 
 # Module-specific build folders
 /app/build
-/feature-bookmarks/build
 /convention-plugins/build
+
+# Core Modules
 /core-common/build
 /core-data/build
 /core-domain/build
 /core-navigation/build
 /core-ui/build
+
+# Feature Modules
+/feature-bookmarks/build
+/feature-home/build
+/feature-detail/build
+/feature-profile/build
+/feature-changepassword/build
+/feature-accountsettingoverview/build
 
 
 # Captures and other generated files
