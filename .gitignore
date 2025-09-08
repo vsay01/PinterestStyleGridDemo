@@ -16,6 +16,12 @@
 /app/build
 /feature-bookmarks/build
 /convention-plugins/build
+/core-common/build
+/core-data/build
+/core-domain/build
+/core-navigation/build
+/core-ui/build
+
 
 # Captures and other generated files
 /captures
@@ -25,6 +31,3 @@ local.properties
 
 # IntelliJ / Android Studio
 .idea/
-
-# Core domain
-/core-domain/build

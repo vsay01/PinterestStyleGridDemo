@@ -27,8 +27,8 @@ import com.vsay.pintereststylegriddemo.R
 import com.vsay.pintereststylegriddemo.common.navigation.AppNavHost
 import com.vsay.pintereststylegriddemo.common.navigation.AppRoute
 import com.vsay.pintereststylegriddemo.common.navigation.BottomNavItem
-import com.vsay.pintereststylegriddemo.feature_bookmarks.ui.BOOKMARK_SCREEN_ROUTE
-import com.vsay.pintereststylegriddemo.feature_bookmarks.ui.BOOKMARKS_GRAPH_ROUTE
+import com.vsay.pintereststylegriddemo.core.navigation.AppRoutes.BOOKMARKS_GRAPH_ROUTE
+import com.vsay.pintereststylegriddemo.core.navigation.AppRoutes.BOOKMARK_SCREEN_ROUTE
 import com.vsay.pintereststylegriddemo.presentation.app.AppViewModel
 import com.vsay.pintereststylegriddemo.presentation.common.TopAppBarConfig // Using your actual class
 import com.vsay.pintereststylegriddemo.ui.common.NavigationIconType
