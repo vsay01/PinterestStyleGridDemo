@@ -8,9 +8,9 @@ import org.gradle.api.artifacts.VersionCatalogsExtension
 import org.gradle.kotlin.dsl.configure
 import org.gradle.kotlin.dsl.dependencies
 import org.gradle.kotlin.dsl.getByType
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import org.jetbrains.kotlin.gradle.dsl.KotlinAndroidProjectExtension
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompile // Added import
-import org.jetbrains.kotlin.gradle.dsl.JvmTarget // Added import
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 class AndroidLibraryConventionPlugin : Plugin<Project> {
     override fun apply(project: Project) {

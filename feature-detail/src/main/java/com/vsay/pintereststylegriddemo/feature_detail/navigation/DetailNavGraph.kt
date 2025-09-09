@@ -1,4 +1,4 @@
-package com.vsay.pintereststylegriddemo.feature_detail.ui
+package com.vsay.pintereststylegriddemo.feature_detail.navigation
 
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
@@ -8,6 +8,7 @@ import androidx.navigation.navArgument
 import androidx.navigation.navDeepLink
 import com.vsay.pintereststylegriddemo.common.TopAppBarConfig
 import com.vsay.pintereststylegriddemo.core.navigation.AppRoutes
+import com.vsay.pintereststylegriddemo.feature_detail.ui.DetailScreen
 
 fun NavGraphBuilder.detailNavGraph(
     navController: NavHostController,

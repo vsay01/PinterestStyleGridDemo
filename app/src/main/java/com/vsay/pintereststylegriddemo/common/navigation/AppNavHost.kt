@@ -13,6 +13,7 @@ import com.vsay.pintereststylegriddemo.ui.bookmarkNavGraph
  * It uses a [NavHost] to manage navigation between different screens.
  *
  * @param navController The [NavHostController] used for navigation.
+ * @param appNavigator The [AppNavigatorImpl] for handling navigation actions.
  * @param appViewModel The [AppViewModel] shared across different screens.
  * @param modifier Optional [Modifier] to be applied to the NavHost.
  * @param startDestination The route for the start destination of the graph.
@@ -20,6 +21,7 @@ import com.vsay.pintereststylegriddemo.ui.bookmarkNavGraph
 @Composable
 fun AppNavHost(
     navController: NavHostController,
+    appNavigator: AppNavigatorImpl, // Added appNavigator parameter
     appViewModel: AppViewModel,
     modifier: Modifier = Modifier,
     startDestination: String
@@ -29,7 +31,7 @@ fun AppNavHost(
         startDestination = startDestination,
         modifier = modifier
     ) {
-        mainAppGraph(navController, appViewModel) // Corresponds to BottomNavItem.Home.route
+        mainAppGraph(navController, appViewModel, appNavigator) // Pass appNavigator
         bookmarkNavGraph()  // Corresponds to BottomNavItem.Bookmark.route
         profileGraph(navController, appViewModel) // Corresponds to BottomNavItem.Profile.route
     }

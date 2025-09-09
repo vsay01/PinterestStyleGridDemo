@@ -5,7 +5,6 @@ import androidx.paging.PagingState
 import com.vsay.pintereststylegriddemo.core.data.model.toDomain
 import com.vsay.pintereststylegriddemo.core.data.remote.ApiService
 import com.vsay.pintereststylegriddemo.core.domain.model.Image
-import kotlin.collections.map
 
 /**
  * A [PagingSource] that loads images from the [ApiService].

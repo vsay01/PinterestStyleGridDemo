@@ -17,16 +17,17 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.compose.currentBackStackEntryAsState
-import androidx.navigation.compose.navigation
 import androidx.navigation.compose.rememberNavController
 import com.vsay.pintereststylegriddemo.common.NavigationIconType
 import com.vsay.pintereststylegriddemo.common.TopAppBarConfig
 import com.vsay.pintereststylegriddemo.common.navigation.AppNavHost
+import com.vsay.pintereststylegriddemo.common.navigation.AppNavigatorImpl
 import com.vsay.pintereststylegriddemo.common.navigation.BottomNavItem
 import com.vsay.pintereststylegriddemo.core.navigation.AppRoutes
 import com.vsay.pintereststylegriddemo.presentation.app.AppViewModel
@@ -51,6 +52,11 @@ fun AppWithTopBar(
     appViewModel: AppViewModel,
 ) {
     val mainNavController = rememberNavController()
+    // Instantiate AppNavigatorImpl
+    val appNavigator = remember(mainNavController) {
+        AppNavigatorImpl(mainNavController)
+    }
+
     val topAppBarConfigState by appViewModel.topAppBarConfig.collectAsState()
     val context = LocalContext.current
 
@@ -204,6 +210,7 @@ fun AppWithTopBar(
     ) { innerPadding ->
         AppNavHost(
             navController = mainNavController,
+            appNavigator = appNavigator, // Pass the appNavigator
             appViewModel = appViewModel,
             modifier = Modifier.padding(innerPadding),
             startDestination = AppRoutes.MainAppGraph.route

@@ -5,9 +5,8 @@ import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.ui.graphics.vector.ImageVector
-import com.vsay.pintereststylegriddemo.R
-import com.vsay.pintereststylegriddemo.core.ui.R as CoreUiR
 import com.vsay.pintereststylegriddemo.core.navigation.AppRoutes
+import com.vsay.pintereststylegriddemo.core.ui.R as CoreUiR
 
 /**
  * Represents an item in the bottom navigation bar.

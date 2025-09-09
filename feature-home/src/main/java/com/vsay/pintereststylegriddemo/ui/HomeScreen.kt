@@ -56,6 +56,7 @@ import com.google.accompanist.placeholder.material.shimmer
 import com.vsay.pintereststylegriddemo.common.NavigationIconType
 import com.vsay.pintereststylegriddemo.common.TopAppBarConfig
 import com.vsay.pintereststylegriddemo.core.domain.model.Image
+import com.vsay.pintereststylegriddemo.core.navigation.navigators.IDetailNavigator
 import com.vsay.pintereststylegriddemo.core.platform_utils.notification.NotificationHelper
 import com.vsay.pintereststylegriddemo.core.ui.R
 import com.vsay.pintereststylegriddemo.permission.rememberPermissionHandler
@@ -68,8 +69,8 @@ private const val TAG = "HomeScreen"
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun HomeScreen(
+    detailNavigator: IDetailNavigator,
     homeViewModel: HomeViewModel = hiltViewModel(),
-    onImageClick: (image: Image) -> Unit,
     onShowTopAppBar: (TopAppBarConfig) -> Unit,
     smallIconResId: Int,
 ) {
@@ -159,7 +160,9 @@ fun HomeScreen(
                 if (item != null) {
                     ImageCardM3(
                         image = item,
-                        onClick = { onImageClick(item) },
+                        onClick = {
+                            detailNavigator.navigateToDetail(item.id)
+                        },
                         onLongClick = {
                             Log.d(TAG, "Long press on image: ${item.id}")
                             if (notificationPermissionHandler.hasPermission.value) {
