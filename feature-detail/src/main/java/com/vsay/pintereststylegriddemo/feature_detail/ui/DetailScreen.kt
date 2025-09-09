@@ -1,6 +1,5 @@
-package com.vsay.pintereststylegriddemo.presentation.detail.ui
+package com.vsay.pintereststylegriddemo.feature_detail.ui
 
-// Material 3 imports
 import android.util.Log
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -43,34 +42,21 @@ import coil.request.ImageRequest
 import com.google.accompanist.placeholder.PlaceholderHighlight
 import com.google.accompanist.placeholder.material.placeholder
 import com.google.accompanist.placeholder.material.shimmer
-import com.vsay.pintereststylegriddemo.R
+import com.vsay.pintereststylegriddemo.common.NavigationIconType
+import com.vsay.pintereststylegriddemo.common.TopAppBarConfig
 import com.vsay.pintereststylegriddemo.core.domain.model.Image
 import com.vsay.pintereststylegriddemo.core.navigation.AppRoutes
-import com.vsay.pintereststylegriddemo.presentation.app.AppViewModel
-import com.vsay.pintereststylegriddemo.common.TopAppBarConfig
-import com.vsay.pintereststylegriddemo.presentation.detail.viewmodel.DetailViewModel
-import com.vsay.pintereststylegriddemo.presentation.detail.viewmodel.UiState
-import com.vsay.pintereststylegriddemo.common.NavigationIconType
-import com.vsay.pintereststylegriddemo.ui.theme.PinterestStyleGridDemoTheme
+import com.vsay.pintereststylegriddemo.core.ui.R
+import com.vsay.pintereststylegriddemo.feature_detail.viewmodel.DetailViewModel
+import com.vsay.pintereststylegriddemo.feature_detail.viewmodel.UiState
+import com.vsay.pintereststylegriddemo.theme.PinterestStyleGridDemoTheme
 
 private const val TAG = "DetailScreen"
 
-/**
- * Composable function for the Detail Screen.
- *
- * This screen displays the details of a selected image. It handles different UI states:
- * Loading, Success (displaying image details), and Error.
- * It also updates the TopAppBar with the image author's name and a back navigation icon.
- *
- * @param appViewModel The [AppViewModel] used to control the TopAppBar.
- * @param navController The [NavController] used for navigating back from this screen.
- * @param viewModel The [DetailViewModel] responsible for fetching and managing the image details.
- *                  It is provided by Hilt.
- */
 @Composable
 fun DetailScreen(
-    appViewModel: AppViewModel,
     navController: NavController, // For back navigation
+    onShowTopAppBar: (TopAppBarConfig) -> Unit, // Callback for TopAppBar
     viewModel: DetailViewModel = hiltViewModel()
 ) {
     val uiState by viewModel.uiState.collectAsState()
@@ -79,7 +65,8 @@ fun DetailScreen(
     LaunchedEffect(uiState, navController) { // Key on uiState to update title
         val currentImage = (uiState as? UiState.Success<Image>)?.data
         Log.d(TAG, "Updating TopAppBar for DetailScreen. Image author: ${currentImage?.author}")
-        appViewModel.showTopAppBar(
+        // appViewModel.showTopAppBar( // Replaced
+        onShowTopAppBar(
             TopAppBarConfig(
                 title = currentImage?.author ?: context.getString(R.string.details_screen_title),
                 navigationIconType = NavigationIconType.BACK,
@@ -95,7 +82,7 @@ fun DetailScreen(
     Box(modifier = Modifier.fillMaxSize()) {
         when (val state = uiState) {
             is UiState.Loading -> {
-                CircularProgressIndicator(modifier = Modifier.align(Alignment.Center)) // M3 CircularProgressIndicator
+                CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
             }
 
             is UiState.Success -> {
@@ -104,7 +91,7 @@ fun DetailScreen(
                     onNavigateToProfile = {
                         navController.navigate(AppRoutes.Profile.ProfileRoot.route)
                     }
-                ) // state.data is Image?
+                )
             }
 
             is UiState.Error -> {
@@ -124,9 +111,8 @@ fun DetailScreen(
                         style = MaterialTheme.typography.bodyLarge,
                         modifier = Modifier.padding(bottom = 8.dp)
                     )
-                    // Only show Retry button if the error message is NOT the specific one
                     if (state.message != specificErrorMessage) {
-                        Button(onClick = { viewModel.retry() }) { // M3 Button
+                        Button(onClick = { viewModel.retry() }) {
                             Text(stringResource(id = R.string.button_retry))
                         }
                     }
@@ -136,14 +122,6 @@ fun DetailScreen(
     }
 }
 
-/**
- * Composable function that displays the UI for the detail screen when image data is successfully loaded.
- * It shows the image itself and its attributes like ID, author, dimensions, and a clickable download URL.
- * If the image data is null, it displays a message indicating that the data is not available.
- *
- * @param image The [Image] object containing the details to display. Can be null.
- * @param modifier The [Modifier] to be applied to the root Column of this composable.
- */
 @Composable
 fun DetailScreenUI(
     image: Image?,
@@ -155,7 +133,7 @@ fun DetailScreenUI(
             Text(
                 stringResource(id = R.string.image_data_not_available),
                 style = MaterialTheme.typography.bodyLarge
-            ) // M3 Text
+            )
         }
         return
     }
@@ -169,7 +147,7 @@ fun DetailScreenUI(
 
         AsyncImage(
             model = ImageRequest.Builder(LocalContext.current)
-                .data(image.downloadURL) // Ensure this is the direct displayable URL
+                .data(image.downloadURL)
                 .crossfade(true)
                 .build(),
             contentDescription = stringResource(
@@ -182,7 +160,7 @@ fun DetailScreenUI(
                 .placeholder(
                     visible = isImageLoading,
                     highlight = PlaceholderHighlight.shimmer(),
-                    color = MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.5f) // M3 placeholder color
+                    color = MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.5f)
                 ),
             contentScale = ContentScale.Crop,
             onState = { state ->
@@ -217,30 +195,17 @@ fun DetailScreenUI(
             }
         )
 
-        Spacer(modifier = Modifier.height(16.dp)) // Add some space before the new button
+        Spacer(modifier = Modifier.height(16.dp))
 
-        // vvv NEW BUTTON FOR CROSS-GRAPH NAVIGATION vvv
         Button(
-            onClick = onNavigateToProfile, // Use the new lambda
+            onClick = onNavigateToProfile,
             modifier = Modifier.fillMaxWidth()
         ) {
             Text("View Profile Section")
         }
-        // ^^^ NEW BUTTON FOR CROSS-GRAPH NAVIGATION ^^^
     }
 }
 
-/**
- * A private composable function that displays a single attribute of the image in a row format.
- * It consists of a label and a value. The value can optionally be clickable.
- *
- * @param label The text label for the attribute (e.g., "Author", "Width").
- * @param value The actual value of the attribute.
- * @param isClickableValue A boolean indicating whether the `value` text should be styled
- *                         as a clickable link and respond to clicks. Defaults to `false`.
- * @param onValueClick A lambda function to be executed when the `value` is clicked.
- *                     This is only relevant if `isClickableValue` is `true`. Defaults to `null`.
- */
 @Composable
 private fun DetailAttributeRow(
     label: String,
@@ -266,7 +231,7 @@ private fun DetailAttributeRow(
         } else {
             MaterialTheme.typography.bodyMedium
         }
-        Text( // M3 Text
+        Text(
             text = value,
             style = valueStyle,
             modifier = Modifier
@@ -351,13 +316,11 @@ fun DetailScreenErrorStateInvalidIdPreview() {
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Text(
-                // Simulating the specific error message from strings.xml
                 text = context.getString(R.string.error_invalid_or_missing_image_id),
                 color = MaterialTheme.colorScheme.error,
                 textAlign = TextAlign.Center,
                 modifier = Modifier.padding(bottom = 8.dp)
             )
-            // Retry button should NOT appear here
         }
     }
 }

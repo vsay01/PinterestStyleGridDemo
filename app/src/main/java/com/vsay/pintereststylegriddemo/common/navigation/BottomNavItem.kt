@@ -6,6 +6,7 @@ import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.ui.graphics.vector.ImageVector
 import com.vsay.pintereststylegriddemo.R
+import com.vsay.pintereststylegriddemo.core.ui.R as CoreUiR
 import com.vsay.pintereststylegriddemo.core.navigation.AppRoutes
 
 /**
@@ -33,20 +34,20 @@ sealed class BottomNavItem(
         route = AppRoutes.MainAppGraph.route, // Example: Points to the main content graph
         label = "Home", // Fallback label, actual label will come from string resource
         icon = Icons.Filled.Home,
-        labelResId = R.string.bottom_nav_home
+        labelResId = CoreUiR.string.bottom_nav_home
     )
 
     object Bookmark : BottomNavItem(
         route = AppRoutes.BookmarkGraph.route, // Placeholder: Define AppRoutes.SearchGraph.route
         label = "Bookmark", // Fallback label
         icon = Icons.Filled.Favorite, // Consider changing to Bookmark icon
-        labelResId = R.string.bottom_nav_bookmark
+        labelResId = CoreUiR.string.bottom_nav_bookmark
     )
 
     object Profile : BottomNavItem(
         route = AppRoutes.ProfileGraph.route, // Placeholder: Define AppRoutes.ProfileGraph.route
         label = "Profile", // Fallback label
         icon = Icons.Filled.Person, // Or Icons.Filled.AccountCircle
-        labelResId = R.string.bottom_nav_profile
+        labelResId = CoreUiR.string.bottom_nav_profile
     )
 }

@@ -1,4 +1,4 @@
-package com.vsay.pintereststylegriddemo.ui.theme
+package com.vsay.pintereststylegriddemo.theme
 
 import androidx.compose.ui.graphics.Color
 

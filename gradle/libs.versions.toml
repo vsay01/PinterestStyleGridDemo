@@ -9,7 +9,6 @@ junit = "4.13.2"
 junitVersion = "1.3.0"
 espressoCore = "3.7.0"
 appcompat = "1.7.1"
-material = "1.13.0"
 composeUi = "1.9.0"
 activityCompose = "1.10.1"
 lifecycleViewmodelCompose = "2.9.3"
@@ -21,6 +20,7 @@ retrofit = "3.0.0"  # Updated to stable version
 kotlinxCoroutinesAndroid = "1.10.2"
 okhttp = "5.1.0" # Or the latest version of OkHttp
 navigationCompose = "2.9.3"
+googleMaterial = "1.12.0"
 material3 = "1.3.2"
 # Ensure this line exists and has your desired compile SDK version
 compileSdk = "36"
@@ -45,10 +45,8 @@ androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "j
 androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
 androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
 kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "kotlinxCoroutinesAndroid" }
-material = { group = "com.google.android.material", name = "material", version.ref = "material" }
 
 androidx-compose-ui = { group = "androidx.compose.ui", name = "ui", version.ref = "composeUi" }
-androidx-compose-material = { group = "androidx.compose.material", name = "material", version.ref = "composeUi" }
 androidx-compose-ui-tooling-preview = { group = "androidx.compose.ui", name = "ui-tooling-preview", version.ref = "composeUi" }
 androidx-compose-ui-tooling = { group = "androidx.compose.ui", name = "ui-tooling", version.ref = "composeUi" }
 androidx-activity-compose = { group = "androidx.activity", name = "activity-compose", version.ref = "activityCompose" }
@@ -63,6 +61,7 @@ okhttp-loggingInterceptor = { group = "com.squareup.okhttp3", name = "logging-in
 
 androidx-navigation-compose = { group = "androidx.navigation", name = "navigation-compose", version.ref = "navigationCompose" }
 androidx-navigation-common-ktx = { group = "androidx.navigation", name = "navigation-common-ktx", version.ref = "navigationCompose" } # Added this line
+google-material = { group = "com.google.android.material", name = "material", version.ref = "googleMaterial" }
 androidx-material3 = { group = "androidx.compose.material3", name = "material3", version.ref = "material3" }
 
 [plugins]

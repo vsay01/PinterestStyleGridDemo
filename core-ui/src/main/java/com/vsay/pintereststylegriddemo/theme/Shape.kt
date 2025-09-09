@@ -1,7 +1,7 @@
-package com.vsay.pintereststylegriddemo.ui.theme
+package com.vsay.pintereststylegriddemo.theme
 
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Shapes
+import androidx.compose.material3.Shapes // Changed to material3
 import androidx.compose.ui.unit.dp
 
 val Shapes = Shapes(

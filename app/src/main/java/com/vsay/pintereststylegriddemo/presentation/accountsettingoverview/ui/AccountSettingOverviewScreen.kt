@@ -14,9 +14,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.vsay.pintereststylegriddemo.common.NavigationIconType
+import com.vsay.pintereststylegriddemo.common.TopAppBarConfig
 import com.vsay.pintereststylegriddemo.core.navigation.AppRoutes
 import com.vsay.pintereststylegriddemo.presentation.app.AppViewModel
-import com.vsay.pintereststylegriddemo.common.TopAppBarConfig
 
 @Composable
 fun AccountSettingsOverviewScreen(navController: NavController, appViewModel: AppViewModel) {
@@ -47,7 +47,7 @@ fun AccountSettingsOverviewUI(
         Button(onClick = { navController.navigate(AppRoutes.Profile.ChangePassword.route) }) {
             Text("Change Password")
         }
-        Button(onClick = { navController.navigate(AppRoutes.Profile.ManageNotifications.route) }) {
+        Button(onClick = { }) {
             Text("Manage Notifications")
         }
     }

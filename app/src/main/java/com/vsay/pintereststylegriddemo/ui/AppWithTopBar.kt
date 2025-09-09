@@ -22,14 +22,15 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.compose.currentBackStackEntryAsState
+import androidx.navigation.compose.navigation
 import androidx.navigation.compose.rememberNavController
-import com.vsay.pintereststylegriddemo.R
+import com.vsay.pintereststylegriddemo.common.NavigationIconType
+import com.vsay.pintereststylegriddemo.common.TopAppBarConfig
 import com.vsay.pintereststylegriddemo.common.navigation.AppNavHost
 import com.vsay.pintereststylegriddemo.common.navigation.BottomNavItem
 import com.vsay.pintereststylegriddemo.core.navigation.AppRoutes
 import com.vsay.pintereststylegriddemo.presentation.app.AppViewModel
-import com.vsay.pintereststylegriddemo.common.TopAppBarConfig // Using your actual class
-import com.vsay.pintereststylegriddemo.common.NavigationIconType
+import com.vsay.pintereststylegriddemo.core.ui.R as CoreUiR
 
 /**
  * Composable function that sets up the main application UI, including the top app bar,
@@ -56,6 +57,29 @@ fun AppWithTopBar(
     val navBackStackEntry by mainNavController.currentBackStackEntryAsState()
     val currentRoute = navBackStackEntry?.destination?.route
 
+    val bottomBarVisible = when (currentRoute) {
+        AppRoutes.Main.Detail.routeDefinition -> false // Detail screen always hides it
+
+        // --- Profile Section ---
+        // The main landing screen of the Profile tab shows the bottom bar.
+        AppRoutes.Profile.ProfileRoot.route -> true
+
+        // Deeper screens within the Profile graph hide the bottom bar.
+        AppRoutes.Profile.EditProfile.route, // Assuming EditProfile is a child screen
+        AppRoutes.Profile.AccountSettingsGraph.route, // Route for the nested graph
+        AppRoutes.Profile.AccountSettingsOverview.route,
+        AppRoutes.Profile.ChangePassword.route,
+        AppRoutes.Profile.ManageNotifications.route -> false
+
+        // Add any other specific child routes of Profile that should hide the bottom bar.
+        // Note: AppRoutes.Profile.ProfileGraph.route is the route for the navigation graph itself.
+        // Usually, the currentRoute will be one of the composable destinations within that graph.
+
+        // --- Default ---
+        // For other main tab destinations (like Home, Bookmarks) and by default.
+        else -> true
+    }
+
     LaunchedEffect(currentRoute) {
         when (currentRoute) {
             AppRoutes.Bookmark.BookmarkRoot.route -> {
@@ -69,19 +93,21 @@ fun AppWithTopBar(
                     )
                 )
             }
+
             AppRoutes.Main.Home.route -> {
                 appViewModel.updateTopAppBar(
                     TopAppBarConfig(
-                        title = context.getString(R.string.home_screen_title),
+                        title = context.getString(CoreUiR.string.home_screen_title),
                         navigationIconType = NavigationIconType.NONE,
                         isVisible = true
                     )
                 )
             }
+
             AppRoutes.Main.Detail.route -> {
                 appViewModel.updateTopAppBar(
                     TopAppBarConfig(
-                        title = context.getString(R.string.details_screen_title),
+                        title = context.getString(CoreUiR.string.details_screen_title),
                         navigationIconType = NavigationIconType.BACK,
                         onNavigationIconClick = { mainNavController.navigateUp() },
                         isVisible = true
@@ -141,35 +167,37 @@ fun AppWithTopBar(
             }
         },
         bottomBar = {
-            NavigationBar {
-                val currentDestination = navBackStackEntry?.destination
-                bottomNavItems.forEach { screen ->
-                    NavigationBarItem(
-                        icon = { Icon(screen.icon, contentDescription = screen.label) },
-                        label = { Text(screen.label) },
-                        selected = currentDestination?.hierarchy?.any {
-                            val isSelected = if (screen == BottomNavItem.Bookmark) {
-                                it.route == AppRoutes.BookmarkGraph.route || currentRoute == AppRoutes.Bookmark.BookmarkRoot.route
-                            } else {
-                                it.route == screen.route
-                            }
-                            isSelected
-                        } == true,
-                        onClick = {
-                            val targetRoute = if (screen == BottomNavItem.Bookmark) {
-                                AppRoutes.BookmarkGraph.route
-                            } else {
-                                screen.route
-                            }
-                            mainNavController.navigate(targetRoute) {
-                                popUpTo(mainNavController.graph.findStartDestination().id) {
-                                    saveState = true
+            if (bottomBarVisible) {
+                NavigationBar {
+                    val currentDestination = navBackStackEntry?.destination
+                    bottomNavItems.forEach { screen ->
+                        NavigationBarItem(
+                            icon = { Icon(screen.icon, contentDescription = screen.label) },
+                            label = { Text(screen.label) },
+                            selected = currentDestination?.hierarchy?.any {
+                                val isSelected = if (screen == BottomNavItem.Bookmark) {
+                                    it.route == AppRoutes.BookmarkGraph.route || currentRoute == AppRoutes.Bookmark.BookmarkRoot.route
+                                } else {
+                                    it.route == screen.route
                                 }
-                                launchSingleTop = true
-                                restoreState = true
+                                isSelected
+                            } == true,
+                            onClick = {
+                                val targetRoute = if (screen == BottomNavItem.Bookmark) {
+                                    AppRoutes.BookmarkGraph.route
+                                } else {
+                                    screen.route
+                                }
+                                mainNavController.navigate(targetRoute) {
+                                    popUpTo(mainNavController.graph.findStartDestination().id) {
+                                        saveState = true
+                                    }
+                                    launchSingleTop = true
+                                    restoreState = true
+                                }
                             }
-                        }
-                    )
+                        )
+                    }
                 }
             }
         }

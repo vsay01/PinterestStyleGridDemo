@@ -26,6 +26,7 @@ dependencies {
     // Only dependencies that are SPECIFIC to the feature_bookmarks module
     // and are NOT already included by your "pinterest.android-library-convention" convention plugin.
 
+    implementation(project(":core-ui"))
     implementation(project(":core-navigation"))
 
     api(libs.androidx.navigation.common) // Add this for Java compatibility

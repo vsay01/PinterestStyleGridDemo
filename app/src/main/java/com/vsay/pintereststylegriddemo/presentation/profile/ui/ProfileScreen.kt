@@ -22,11 +22,12 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.vsay.pintereststylegriddemo.R
+import com.vsay.pintereststylegriddemo.core.ui.R as CoreUiR
 import com.vsay.pintereststylegriddemo.core.navigation.AppRoutes
 import com.vsay.pintereststylegriddemo.presentation.app.AppViewModel
 import com.vsay.pintereststylegriddemo.common.TopAppBarConfig
 import com.vsay.pintereststylegriddemo.common.NavigationIconType
-import com.vsay.pintereststylegriddemo.ui.theme.PinterestStyleGridDemoTheme
+import com.vsay.pintereststylegriddemo.theme.PinterestStyleGridDemoTheme
 
 const val TAG = "ProfileScreen"
 
@@ -42,7 +43,7 @@ fun ProfileScreen(
     LaunchedEffect(Unit) {
         appViewModel.showTopAppBar(
             TopAppBarConfig(
-                title = context.getString(R.string.bottom_nav_profile),
+                title = context.getString(CoreUiR.string.bottom_nav_profile),
                 navigationIconType = NavigationIconType.BACK,
                 onNavigationIconClick = {
                     navController.navigateUp()

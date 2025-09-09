@@ -81,9 +81,14 @@ class AndroidLibraryConventionPlugin : Plugin<Project> {
             dependencies {
                 add("implementation", libs.findLibrary("androidx-core-ktx").get())
                 add("implementation", libs.findLibrary("androidx-activity-compose").get())
-
-                add("implementation", libs.findLibrary("material").get())
                 add("implementation", libs.findLibrary("androidx-material3").get())
+
+                // Coil for image loading
+                add("implementation", libs.findLibrary("coil-compose").get())
+
+                // Accompanist (optional for animations or grid)
+                add("implementation", libs.findLibrary("accompanist-systemuicontroller").get())
+                add("implementation", libs.findLibrary("accompanist-placeholder-material").get())
 
                 add("implementation", libs.findLibrary("androidx-compose-ui").get())
                 add("implementation", libs.findLibrary("androidx-compose-ui-tooling").get())
