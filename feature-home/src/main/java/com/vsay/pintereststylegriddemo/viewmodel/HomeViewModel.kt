@@ -4,11 +4,13 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
+import com.vsay.pintereststylegriddemo.analytics.HomeAnalyticsTracker
 import com.vsay.pintereststylegriddemo.core.domain.model.Image
 import com.vsay.pintereststylegriddemo.core.domain.usecase.GetImagesUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import jakarta.inject.Inject
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.onEach
 
 /**
  * ViewModel for the Home screen.
@@ -21,14 +23,25 @@ import kotlinx.coroutines.flow.Flow
  */
 @HiltViewModel
 class HomeViewModel @Inject constructor(
-    private val getImagesUseCase: GetImagesUseCase
+    private val getImagesUseCase: GetImagesUseCase,
+    private val analyticsTracker: HomeAnalyticsTracker
 ) : ViewModel() {
+
+    init {
+        analyticsTracker.trackHomeScreenOpened()
+    }
 
     /**
      * A cold Flow of paged image data.
      * cachedIn(viewModelScope) ensures the paging state survives configuration changes
      * (like rotation).
      */
-    val pagingFlow: Flow<PagingData<Image>> =
-        getImagesUseCase.invoke().cachedIn(viewModelScope)
+    val pagingFlow: Flow<PagingData<Image>> = getImagesUseCase()
+        .onEach {
+            // This will track every time new PagingData is emitted,
+            // which might be frequent (e.g., on initial load, refresh, append).
+            // Consider if this is the desired granularity.
+            analyticsTracker.trackImageFeedLoaded()
+        }
+        .cachedIn(viewModelScope)
 }

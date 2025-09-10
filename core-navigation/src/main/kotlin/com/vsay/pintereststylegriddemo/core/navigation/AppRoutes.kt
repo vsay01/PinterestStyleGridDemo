@@ -23,12 +23,20 @@ package com.vsay.pintereststylegriddemo.core.navigation
 sealed class AppRoutes(open val routeDefinition: String) {
 
     // --- Common Graph Routes ---
-    object MainAppGraph : AppRoutes("main_app_graph")
-    object BookmarkGraph : AppRoutes("bookmarks_graph")
-    object ProfileGraph : AppRoutes("profile_graph")
+    /*
+     * Purpose: Defines the route for the specific Composable screen that shows the main home content.
+     * Needed For: To be the startDestination within HomeGraph and to have a unique identifier for the composable that builds the HomeScreen UI.
+     */
+    object HomeGraph : AppRoutes("home_graph")         // Dedicated graph for the Home tab
+    object BookmarkGraph : AppRoutes("bookmark_graph") // Consistent naming
+    object ProfileGraph : AppRoutes("profile_graph")   // Consistent naming for the Profile tab's graph
 
 
     // --- Routes within Home/Main Feature Area ---
+    /*
+     * Purpose: Provides a namespace to organize routes related to the "main" application area (like Home and Detail).
+     * Needed For: Readability and maintainability of AppRoutes.kt in a large project. It doesn't directly participate in navigation logic as a navigable destination itself but helps structure the route definitions.
+     */
     sealed class Main(override val routeDefinition: String) : AppRoutes(routeDefinition) {
         object Home : Main("home")
         object Detail : Main("") { // Pass a dummy/placeholder string to the super constructor
@@ -53,11 +61,7 @@ sealed class AppRoutes(open val routeDefinition: String) {
 
     // --- Routes within Profile Feature Area ---
     sealed class Profile(override val routeDefinition: String) : AppRoutes(routeDefinition) {
-        companion object { // For the main Profile graph route
-            private const val PROFILE_GRAPH_ROUTE = "profile_graph"
-        }
-        object ProfileGraph : Profile(PROFILE_GRAPH_ROUTE) // Route for the entire Profile tab's graph
-
+        // ProfileGraph is now a top-level object. These are screens *within* ProfileGraph.
         object ProfileRoot : Profile("profile_root_screen") // Start screen of ProfileGraph
         object EditProfile : Profile("profile_edit_screen") // Another screen in ProfileGraph
 

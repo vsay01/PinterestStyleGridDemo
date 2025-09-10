@@ -1,5 +1,6 @@
 package com.vsay.pintereststylegriddemo.ui
 
+import android.util.Log
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
@@ -85,6 +86,17 @@ fun AppWithTopBar(
         // For other main tab destinations (like Home, Bookmarks) and by default.
         else -> true
     }
+
+    // Add this LaunchedEffect to register the listener ONCE.
+    LaunchedEffect(mainNavController) {
+        mainNavController.addOnDestinationChangedListener { controller, destination, arguments ->
+            Log.d("NAV_DEBUG", "DestinationChanged: New Destination = ${destination.route}, Args = $arguments")
+            // Log the current back stack description if possible (see helper idea below)
+            // For now, this event itself is very valuable.
+            Log.d("NAV_DEBUG", "DestinationChanged: Current visible route via controller = ${controller.currentDestination?.route}")
+        }
+    }
+
 
     LaunchedEffect(currentRoute) {
         when (currentRoute) {
@@ -180,27 +192,26 @@ fun AppWithTopBar(
                         NavigationBarItem(
                             icon = { Icon(screen.icon, contentDescription = screen.label) },
                             label = { Text(screen.label) },
-                            selected = currentDestination?.hierarchy?.any {
-                                val isSelected = if (screen == BottomNavItem.Bookmark) {
-                                    it.route == AppRoutes.BookmarkGraph.route || currentRoute == AppRoutes.Bookmark.BookmarkRoot.route
-                                } else {
-                                    it.route == screen.route
-                                }
-                                isSelected
+                            selected = currentDestination?.hierarchy?.any { destInHierarchy ->
+                                // Use generic logic for ALL tabs, including Bookmark
+                                destInHierarchy.route == screen.route // screen.route is the GRAPH route
                             } == true,
                             onClick = {
-                                val targetRoute = if (screen == BottomNavItem.Bookmark) {
-                                    AppRoutes.BookmarkGraph.route
-                                } else {
-                                    screen.route
-                                }
+                                val targetRoute = screen.route
+                                val popUpToRoute = mainNavController.graph.findStartDestination().id
+
+                                Log.d("NAV_DEBUG", "OnClick: Attempting to navigate to targetRoute = $targetRoute")
+                                Log.d("NAV_DEBUG", "OnClick: Current Destination (before nav) = ${mainNavController.currentDestination?.route}")
+                                Log.d("NAV_DEBUG", "OnClick: PopUpTo Route = $popUpToRoute")
+
                                 mainNavController.navigate(targetRoute) {
-                                    popUpTo(mainNavController.graph.findStartDestination().id) {
+                                    popUpTo(popUpToRoute) {
                                         saveState = true
+                                        inclusive = true
                                     }
                                     launchSingleTop = true
-                                    restoreState = true
                                 }
+                                // Note: The DestinationChangedListener will fire AFTER this navigation action completes.
                             }
                         )
                     }
@@ -213,7 +224,7 @@ fun AppWithTopBar(
             appNavigator = appNavigator, // Pass the appNavigator
             appViewModel = appViewModel,
             modifier = Modifier.padding(innerPadding),
-            startDestination = AppRoutes.MainAppGraph.route
+            startDestination = AppRoutes.HomeGraph.route
         )
     }
 }

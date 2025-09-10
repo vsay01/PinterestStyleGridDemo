@@ -30,7 +30,7 @@ sealed class BottomNavItem(
     val labelResId: Int,
 ) {
     object Home : BottomNavItem(
-        route = AppRoutes.MainAppGraph.route, // Example: Points to the main content graph
+        route = AppRoutes.HomeGraph.route,
         label = "Home", // Fallback label, actual label will come from string resource
         icon = Icons.Filled.Home,
         labelResId = CoreUiR.string.bottom_nav_home

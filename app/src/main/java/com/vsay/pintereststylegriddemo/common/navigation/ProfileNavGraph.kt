@@ -24,7 +24,7 @@ fun NavGraphBuilder.profileGraph(
     appViewModel: AppViewModel // Or other ViewModels as needed
 ) {
     navigation(
-        route = AppRoutes.Profile.ProfileGraph.route, // The main graph for the Profile tab
+        route = AppRoutes.ProfileGraph.route, // The main graph for the Profile tab
         startDestination = AppRoutes.Profile.ProfileRoot.route
     ) {
         composable(AppRoutes.Profile.ProfileRoot.route) {
