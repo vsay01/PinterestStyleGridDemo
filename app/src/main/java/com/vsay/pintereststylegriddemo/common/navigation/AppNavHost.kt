@@ -4,9 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.navigation
 import com.vsay.pintereststylegriddemo.R
-import com.vsay.pintereststylegriddemo.core.navigation.AppRoutes
 import com.vsay.pintereststylegriddemo.feature_detail.navigation.detailNavGraph
 import com.vsay.pintereststylegriddemo.navigation.homeNavGraph
 import com.vsay.pintereststylegriddemo.presentation.app.AppViewModel
