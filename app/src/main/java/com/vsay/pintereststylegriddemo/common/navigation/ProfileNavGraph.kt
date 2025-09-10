@@ -4,8 +4,10 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
+import com.vsay.pintereststylegriddemo.core.navigation.AppRoutes
 import com.vsay.pintereststylegriddemo.presentation.accountsettingoverview.ui.AccountSettingsOverviewScreen
 import com.vsay.pintereststylegriddemo.presentation.app.AppViewModel
+import com.vsay.pintereststylegriddemo.presentation.changepassword.ui.ChangePasswordScreen
 import com.vsay.pintereststylegriddemo.presentation.profile.ui.ProfileScreen
 
 /**
@@ -22,10 +24,10 @@ fun NavGraphBuilder.profileGraph(
     appViewModel: AppViewModel // Or other ViewModels as needed
 ) {
     navigation(
-        route = AppRoute.Profile.ProfileGraph.route, // The main graph for the Profile tab
-        startDestination = AppRoute.Profile.ProfileRoot.route
+        route = AppRoutes.ProfileGraph.route, // The main graph for the Profile tab
+        startDestination = AppRoutes.Profile.ProfileRoot.route
     ) {
-        composable(AppRoute.Profile.ProfileRoot.route) {
+        composable(AppRoutes.Profile.ProfileRoot.route) {
             ProfileScreen(
                 navController = navController,
                 appViewModel = appViewModel
@@ -35,19 +37,19 @@ fun NavGraphBuilder.profileGraph(
 
         // --- Definition of the NESTED Account Settings Graph ---
         navigation(
-            route = AppRoute.Profile.AccountSettingsGraph.route, // Route for this nested graph
-            startDestination = AppRoute.Profile.AccountSettingsOverview.route
+            route = AppRoutes.Profile.AccountSettingsGraph.route, // Route for this nested graph
+            startDestination = AppRoutes.Profile.AccountSettingsOverview.route
         ) {
-            composable(AppRoute.Profile.AccountSettingsOverview.route) {
+            composable(AppRoutes.Profile.AccountSettingsOverview.route) {
                 AccountSettingsOverviewScreen(
                     navController = navController,
                     appViewModel = appViewModel
                 )
             }
-            composable(AppRoute.Profile.ChangePassword.route) {
+            composable(AppRoutes.Profile.ChangePassword.route) {
                 ChangePasswordScreen(navController = navController, appViewModel = appViewModel)
             }
-            composable(AppRoute.Profile.ManageNotifications.route) {
+            composable(AppRoutes.Profile.ManageNotifications.route) {
                 // ManageNotificationsScreen(...)
             }
         }

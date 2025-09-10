@@ -48,10 +48,17 @@ android {
 }
 
 dependencies {
+    implementation(project(":core-domain"))
+    implementation(project(":core-data"))
+    implementation(project(":core-navigation"))
+    implementation(project(":core-ui"))
+    implementation(project(":feature-home"))
+    implementation(project(":feature-detail"))
+    implementation(project(":feature-bookmarks"))
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
-    implementation(libs.material)
+    implementation(libs.google.material)
     implementation(libs.androidx.material3)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
@@ -59,7 +66,6 @@ dependencies {
 
     // Jetpack Compose
     implementation(libs.androidx.compose.ui)
-    implementation(libs.androidx.compose.material)
     implementation(libs.androidx.compose.ui.tooling.preview)
     debugImplementation(libs.androidx.compose.ui.tooling)
 

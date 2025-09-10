@@ -2,7 +2,7 @@ package com.vsay.pintereststylegriddemo.presentation.common // Or your chosen pa
 
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.runtime.Composable
-import com.vsay.pintereststylegriddemo.ui.common.NavigationIconType
+import com.vsay.pintereststylegriddemo.common.NavigationIconType
 
 /**
  * Data class representing the configuration state for a composable TopAppBar.

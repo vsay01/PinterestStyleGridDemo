@@ -1,0 +1,4 @@
+<resources>
+    <string name="notification_title_image_from">Image from %1$s</string>
+    <string name="notification_text_tap_to_view">Tap to view details for image ID: %1$s</string>
+</resources>

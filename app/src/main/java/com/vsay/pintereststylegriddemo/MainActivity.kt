@@ -7,8 +7,8 @@ import androidx.activity.viewModels
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
 import com.vsay.pintereststylegriddemo.presentation.app.AppViewModel
+import com.vsay.pintereststylegriddemo.theme.PinterestStyleGridDemoTheme
 import com.vsay.pintereststylegriddemo.ui.AppWithTopBar
-import com.vsay.pintereststylegriddemo.ui.theme.PinterestStyleGridDemoTheme
 import dagger.hilt.android.AndroidEntryPoint
 
 /**

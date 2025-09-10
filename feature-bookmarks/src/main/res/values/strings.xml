@@ -1,0 +1,5 @@
+<resources>
+    <string name="bottom_nav_bookmark">Bookmarks</string>
+    <string name="bookmark_screen_placeholder_text">Your saved items will appear here.</string>
+    <string name="bookmark_screen_title">Bookmark Screen</string>
+</resources>

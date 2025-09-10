@@ -1,4 +1,3 @@
-// In BottomNavItem.kt (or AppRoute.kt if nested there)
 package com.vsay.pintereststylegriddemo.common.navigation // Or your chosen package
 
 import androidx.compose.material.icons.Icons
@@ -6,7 +5,8 @@ import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.ui.graphics.vector.ImageVector
-import com.vsay.pintereststylegriddemo.R
+import com.vsay.pintereststylegriddemo.core.navigation.AppRoutes
+import com.vsay.pintereststylegriddemo.core.ui.R as CoreUiR
 
 /**
  * Represents an item in the bottom navigation bar.
@@ -24,29 +24,29 @@ import com.vsay.pintereststylegriddemo.R
  * @property labelResId The Android string resource ID for the localized label of this item.
  */
 sealed class BottomNavItem(
-    val route: String,      // This route should match a graph route in AppNavHost (e.g., AppRoute.MainAppGraph.route)
+    val route: String,      // This route should match a graph route in AppNavHost (e.g., AppRoutes.MainAppGraph.route)
     val label: String,
     val icon: ImageVector,
     val labelResId: Int,
 ) {
     object Home : BottomNavItem(
-        route = AppRoute.MainAppGraph.route, // Example: Points to the main content graph
+        route = AppRoutes.HomeGraph.route,
         label = "Home", // Fallback label, actual label will come from string resource
         icon = Icons.Filled.Home,
-        labelResId = R.string.bottom_nav_home
+        labelResId = CoreUiR.string.bottom_nav_home
     )
 
     object Bookmark : BottomNavItem(
-        route = AppRoute.BookmarkGraph.route, // Placeholder: Define AppRoute.SearchGraph.route
+        route = AppRoutes.BookmarkGraph.route, // Placeholder: Define AppRoutes.SearchGraph.route
         label = "Bookmark", // Fallback label
         icon = Icons.Filled.Favorite, // Consider changing to Bookmark icon
-        labelResId = R.string.bottom_nav_bookmark
+        labelResId = CoreUiR.string.bottom_nav_bookmark
     )
 
     object Profile : BottomNavItem(
-        route = AppRoute.ProfileGraph.route, // Placeholder: Define AppRoute.ProfileGraph.route
+        route = AppRoutes.ProfileGraph.route, // Placeholder: Define AppRoutes.ProfileGraph.route
         label = "Profile", // Fallback label
         icon = Icons.Filled.Person, // Or Icons.Filled.AccountCircle
-        labelResId = R.string.bottom_nav_profile
+        labelResId = CoreUiR.string.bottom_nav_profile
     )
 }

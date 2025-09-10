@@ -1,0 +1,34 @@
+package com.vsay.pintereststylegriddemo.feature_detail.navigation
+
+import androidx.navigation.NavGraphBuilder
+import androidx.navigation.NavHostController
+import androidx.navigation.NavType
+import androidx.navigation.compose.composable
+import androidx.navigation.navArgument
+import androidx.navigation.navDeepLink
+import com.vsay.pintereststylegriddemo.common.TopAppBarConfig
+import com.vsay.pintereststylegriddemo.core.navigation.AppRoutes
+import com.vsay.pintereststylegriddemo.feature_detail.ui.DetailScreen
+
+/**
+ * This function defines a single, often shared, screen destination. It does not require its own graph structure around its call in AppNavHost because
+ * - It's not a multi-screen flow needing its own encapsulated back stack separate from the main NavHost.
+ * - It's directly accessible via its own route.
+ */
+fun NavGraphBuilder.detailNavGraph(
+    navController: NavHostController,
+    onShowTopAppBar: (TopAppBarConfig) -> Unit
+) {
+    composable(
+        route = AppRoutes.Main.Detail.route,
+        arguments = listOf(navArgument(AppRoutes.Main.Detail.ARG_IMAGE_ID) { // Updated to use AppRoutes
+            type = NavType.StringType
+        }),
+        deepLinks = listOf(navDeepLink { uriPattern = "myapp://detail/{${AppRoutes.Main.Detail.ARG_IMAGE_ID}}" }) // Updated
+    ) {
+        DetailScreen(
+            navController = navController,
+            onShowTopAppBar = onShowTopAppBar
+        )
+    }
+}
