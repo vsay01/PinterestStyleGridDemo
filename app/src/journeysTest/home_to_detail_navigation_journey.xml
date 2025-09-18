@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<journey name="HomeToDetailNavigationJourney">
+    <description>Verifies that a user can launch the app, see the home screen image grid, tab onthe
+        first image, and successfully navigate to its detail screen</description>
+    <actions>
+        <action>Launch the PinterestStyleGridDemo app.
+            After the app loads, check that a grid of images is visible on the home screen.
+            Then, tap on the very first image in the grid.
+            Finally, verify that a new screen appears showing the details of the image.</action>
+    </actions>
+</journey>

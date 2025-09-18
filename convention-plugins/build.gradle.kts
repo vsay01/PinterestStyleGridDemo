@@ -2,11 +2,6 @@ plugins {
     `kotlin-dsl`
 }
 
-repositories {
-    google()
-    mavenCentral()
-}
-
 // Access versions from the catalog for these dependencies
 dependencies {
     implementation("com.android.tools.build:gradle:${libs.versions.agp.get()}") // if agp version is in the catalog
