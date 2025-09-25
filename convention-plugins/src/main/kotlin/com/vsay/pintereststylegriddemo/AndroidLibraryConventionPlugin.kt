@@ -82,6 +82,7 @@ class AndroidLibraryConventionPlugin : Plugin<Project> {
                 add("implementation", libs.findLibrary("androidx-core-ktx").get())
                 add("implementation", libs.findLibrary("androidx-activity-compose").get())
                 add("implementation", libs.findLibrary("androidx-material3").get())
+                add("implementation", libs.findLibrary("androidx-lifecycle-viewmodel-compose").get())
 
                 // Coil for image loading
                 add("implementation", libs.findLibrary("coil-compose").get())

@@ -5,6 +5,7 @@ plugins {
     alias(libs.plugins.kotlin.parcelize)
     alias(libs.plugins.hilt.android)
     kotlin("kapt")
+    alias(libs.plugins.googleServices)
 }
 
 android {
@@ -52,9 +53,15 @@ dependencies {
     implementation(project(":core-data"))
     implementation(project(":core-navigation"))
     implementation(project(":core-ui"))
+    implementation(project(":core-auth-state"))
     implementation(project(":feature-home"))
     implementation(project(":feature-detail"))
     implementation(project(":feature-bookmarks"))
+    implementation(project(":feature-auth"))
+    implementation(project(":feature-profile"))
+
+    implementation(platform(libs.firebase.bom))
+    implementation(libs.firebase.analytics)
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)

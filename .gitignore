@@ -24,6 +24,7 @@
 /core-ui/build
 
 # Feature Modules
+/feature-auth/build
 /feature-bookmarks/build
 /feature-home/build
 /feature-detail/build

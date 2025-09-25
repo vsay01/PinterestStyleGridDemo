@@ -13,9 +13,6 @@ dependencies {
     implementation(project(":core-platform-utils"))
     // Add feature-specific dependencies below
 
-    // ViewModel
-    implementation(libs.androidx.lifecycle.viewmodel.compose)
-
     // Coil for image loading
     implementation(libs.coil.compose)
 
@@ -25,7 +22,4 @@ dependencies {
 
     // Accompanist
     implementation(libs.accompanist.placeholder.material)
-
-    // navigation
-    implementation(libs.androidx.navigation.compose)
 }

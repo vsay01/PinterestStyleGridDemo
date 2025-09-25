@@ -10,5 +10,6 @@ dependencies {
     implementation(project(":core-navigation"))
     implementation(project(":core-domain"))
     implementation(project(":core-ui"))
-    // Add feature-specific dependencies below
+    implementation(project(":core-platform-utils"))
+    implementation(project(":core-auth-state"))
 }

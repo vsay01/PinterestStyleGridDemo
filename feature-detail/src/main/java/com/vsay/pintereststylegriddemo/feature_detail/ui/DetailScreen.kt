@@ -60,24 +60,6 @@ fun DetailScreen(
     viewModel: DetailViewModel = hiltViewModel()
 ) {
     val uiState by viewModel.uiState.collectAsState()
-    val context = LocalContext.current // Get context for string resources
-
-    LaunchedEffect(uiState, navController) { // Key on uiState to update title
-        val currentImage = (uiState as? UiState.Success<Image>)?.data
-        Log.d(TAG, "Updating TopAppBar for DetailScreen. Image author: ${currentImage?.author}")
-        // appViewModel.showTopAppBar( // Replaced
-        onShowTopAppBar(
-            TopAppBarConfig(
-                title = currentImage?.author ?: context.getString(R.string.details_screen_title),
-                navigationIconType = NavigationIconType.BACK,
-                onNavigationIconClick = {
-                    Log.d(TAG, "Back button clicked on DetailScreen")
-                    navController.navigateUp()
-                }
-                // actions = { /* Add detail specific actions if any */ }
-            )
-        )
-    }
 
     Box(modifier = Modifier.fillMaxSize()) {
         when (val state = uiState) {
