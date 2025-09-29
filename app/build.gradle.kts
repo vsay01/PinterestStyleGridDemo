@@ -19,7 +19,8 @@ android {
         versionCode = 1
         versionName = "1.0"
 
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner =
+            "com.vsay.pintereststylegriddemo.testing.fakes.di.CustomTestRunner"
     }
 
     buildTypes {
@@ -59,6 +60,7 @@ dependencies {
     implementation(project(":feature-bookmarks"))
     implementation(project(":feature-auth"))
     implementation(project(":feature-profile"))
+    androidTestImplementation(project(":test-utils"))
 
     implementation(platform(libs.firebase.bom))
     implementation(libs.firebase.analytics)
@@ -107,9 +109,11 @@ dependencies {
     implementation(libs.accompanist.placeholder.material)
 
     // Hilt for dependency injection
-    implementation (libs.hilt.android)
-    kapt (libs.hilt.compiler)
-    implementation (libs.androidx.hilt.navigation.compose)
+    implementation(libs.hilt.android)
+    kapt(libs.hilt.compiler)
+    androidTestImplementation(libs.hilt.android.testing)
+    kaptAndroidTest(libs.hilt.compiler)
+    implementation(libs.androidx.hilt.navigation.compose)
 
     // navigation
     implementation(libs.androidx.navigation.compose)

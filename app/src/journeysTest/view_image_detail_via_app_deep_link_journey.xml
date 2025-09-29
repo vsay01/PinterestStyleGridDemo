@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<journey name="ViewImageDetailViaAppDeepLinkJourney">
+    <description>Verifies an image detail screen can be opened directly via the app's
+        existing 'myapp://detail/{imageId}' deep link.</description>
+    <!--<inputParameters>
+        <parameter name="targetImageId" defaultValue="0" description="The ID of the image to view."/>
+    </inputParameters>-->
+    <actions>
+        <action>
+            Name: View Image Detail via 'myapp' Deep Link
+            Description: Launches to an image detail screen using 'myapp://detail/{imageId}'.
+            Author: VSay
+            Tags: deep-link, navigation, detail-screen, p0
+
+            # Step 1: Launch using the specific deep link format
+            Given I launch the app via deep link 'myapp://detail/{targetImageId}'.
+            # CONCEPT HIGHLIGHTED: Direct screen access via a known deep link.
+            # '{targetImageId}' is replaced by the Journey's input parameter.
+
+            # Step 2: Verify the detail screen and (conceptually) the correct image ID
+            Then I call 'SharedJourneySteps.verifyDetailScreenIsVisible' with expectedImageId '{targetImageId}'.
+            # CONCEPT HIGHLIGHTED: Reusable, parameterized verification.
+            # As discussed, the tool may not fully use 'expectedImageId' for assertion now,
+            # but the structure is correct.
+
+            # Step3: (Optional) A more general visibility check for the screen
+            And I verify element with test tag 'image_detail_screen' is visible.
+        </action>
+    </actions>
+</journey>

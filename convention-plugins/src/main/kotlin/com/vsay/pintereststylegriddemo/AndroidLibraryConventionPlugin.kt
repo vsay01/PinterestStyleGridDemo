@@ -21,8 +21,9 @@ class AndroidLibraryConventionPlugin : Plugin<Project> {
 
             plugins.apply(libs.findPlugin("android-library").get().get().pluginId)
             plugins.apply(libs.findPlugin("kotlin-android").get().get().pluginId)
-            plugins.apply("dagger.hilt.android.plugin") // <-- ADDED Hilt plugin
-            plugins.apply("org.jetbrains.kotlin.kapt")    // <-- ADDED Kapt for Hilt
+            plugins.apply(libs.findPlugin("kotlin-parcelize").get().get().pluginId)
+            plugins.apply("dagger.hilt.android.plugin")
+            plugins.apply("org.jetbrains.kotlin.kapt")
             plugins.apply(libs.findPlugin("kotlin-compose").get().get().pluginId)
 
             extensions.configure<LibraryExtension> {
@@ -72,7 +73,8 @@ class AndroidLibraryConventionPlugin : Plugin<Project> {
 
             project.tasks.withType(KotlinCompile::class.java).configureEach {
                 compilerOptions {
-                    val javaVersionFromTomlForKotlin = libs.findVersion("java").get().requiredVersion
+                    val javaVersionFromTomlForKotlin =
+                        libs.findVersion("java").get().requiredVersion
                     jvmTarget.set(JvmTarget.fromTarget(javaVersionFromTomlForKotlin))
                 }
             }
@@ -82,7 +84,10 @@ class AndroidLibraryConventionPlugin : Plugin<Project> {
                 add("implementation", libs.findLibrary("androidx-core-ktx").get())
                 add("implementation", libs.findLibrary("androidx-activity-compose").get())
                 add("implementation", libs.findLibrary("androidx-material3").get())
-                add("implementation", libs.findLibrary("androidx-lifecycle-viewmodel-compose").get())
+                add(
+                    "implementation",
+                    libs.findLibrary("androidx-lifecycle-viewmodel-compose").get()
+                )
 
                 // Coil for image loading
                 add("implementation", libs.findLibrary("coil-compose").get())
@@ -100,6 +105,15 @@ class AndroidLibraryConventionPlugin : Plugin<Project> {
                 add("implementation", libs.findLibrary("hilt-android").get())
                 add("implementation", libs.findLibrary("androidx-hilt-navigation-compose").get())
                 add("kapt", libs.findLibrary("hilt-compiler").get())
+
+                // Test
+                add("androidTestImplementation", project(":test-utils"))
+                add("androidTestImplementation", libs.findLibrary("androidx-junit").get())
+                add("androidTestImplementation", libs.findLibrary("androidx-espresso-core").get())
+                add(
+                    "debugImplementation",
+                    libs.findLibrary("androidx-compose-ui-tooling").get()
+                ) // For debug previews
             }
         }
     }

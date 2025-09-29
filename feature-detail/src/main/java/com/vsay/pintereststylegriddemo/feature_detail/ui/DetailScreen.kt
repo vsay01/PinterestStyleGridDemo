@@ -1,6 +1,5 @@
 package com.vsay.pintereststylegriddemo.feature_detail.ui
 
-import android.util.Log
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -17,7 +16,6 @@ import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -28,6 +26,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalUriHandler
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -42,7 +41,6 @@ import coil.request.ImageRequest
 import com.google.accompanist.placeholder.PlaceholderHighlight
 import com.google.accompanist.placeholder.material.placeholder
 import com.google.accompanist.placeholder.material.shimmer
-import com.vsay.pintereststylegriddemo.common.NavigationIconType
 import com.vsay.pintereststylegriddemo.common.TopAppBarConfig
 import com.vsay.pintereststylegriddemo.core.domain.model.Image
 import com.vsay.pintereststylegriddemo.core.navigation.AppRoutes
@@ -124,6 +122,7 @@ fun DetailScreenUI(
         modifier = modifier
             .fillMaxSize()
             .padding(16.dp)
+            .testTag("image_detail_screen")
     ) {
         var isImageLoading by remember { mutableStateOf(true) }
 
@@ -153,7 +152,11 @@ fun DetailScreenUI(
 
         Spacer(modifier = Modifier.height(16.dp))
 
-        DetailAttributeRow(label = stringResource(id = R.string.label_id), value = image.id)
+        DetailAttributeRow(
+            label = stringResource(id = R.string.label_id),
+            value = image.id,
+            valueTestTag = "detail_image_id_text"
+        )
         DetailAttributeRow(
             label = stringResource(id = R.string.label_author),
             value = image.author ?: stringResource(id = R.string.unknown_author)
@@ -193,6 +196,7 @@ private fun DetailAttributeRow(
     label: String,
     value: String,
     isClickableValue: Boolean = false,
+    valueTestTag: String? = null,
     onValueClick: (() -> Unit)? = null,
 ) {
     Row(
@@ -213,12 +217,15 @@ private fun DetailAttributeRow(
         } else {
             MaterialTheme.typography.bodyMedium
         }
+        val valueModifier = Modifier
+            .weight(0.7f)
+            .then(if (onValueClick != null) Modifier.clickable(onClick = onValueClick) else Modifier)
+            .then(if (valueTestTag != null) Modifier.testTag(valueTestTag) else Modifier)
+
         Text(
             text = value,
             style = valueStyle,
-            modifier = Modifier
-                .weight(0.7f)
-                .then(if (onValueClick != null) Modifier.clickable(onClick = onValueClick) else Modifier)
+            modifier = valueModifier
         )
     }
     Spacer(modifier = Modifier.height(8.dp))

@@ -1,5 +1,6 @@
 package com.vsay.pintereststylegriddemo.core.data.repository
 
+import android.util.Log
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.vsay.pintereststylegriddemo.core.domain.model.AuthResult
@@ -14,6 +15,10 @@ import javax.inject.Inject // For Hilt
 class FirebaseAuthRepositoryImpl @Inject constructor(
     private val firebaseAuth: FirebaseAuth
 ) : AuthRepository {
+
+    init {
+        Log.d("AuthRepoDebug", "FirebaseAuthRepositoryImpl INITIALIZED (REAL)") // <-- ADD THIS
+    }
 
     override fun getAuthStateStream(): Flow<User?> {
         return firebaseAuth.authStateFlow().map { firebaseUser ->
