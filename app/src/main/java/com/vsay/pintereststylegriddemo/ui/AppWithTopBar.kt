@@ -90,59 +90,100 @@ fun AppWithTopBar(
     // Add this LaunchedEffect to register the listener ONCE.
     LaunchedEffect(mainNavController) {
         mainNavController.addOnDestinationChangedListener { controller, destination, arguments ->
-            Log.d("NAV_DEBUG", "DestinationChanged: New Destination = ${destination.route}, Args = $arguments")
+            Log.d(
+                "NAV_DEBUG",
+                "DestinationChanged: New Destination = ${destination.route}, Args = $arguments"
+            )
             // Log the current back stack description if possible (see helper idea below)
             // For now, this event itself is very valuable.
-            Log.d("NAV_DEBUG", "DestinationChanged: Current visible route via controller = ${controller.currentDestination?.route}")
+            Log.d(
+                "NAV_DEBUG",
+                "DestinationChanged: Current visible route via controller = ${controller.currentDestination?.route}"
+            )
         }
     }
 
 
     LaunchedEffect(currentRoute) {
-        when (currentRoute) {
+        val newToolBarConfig = when (currentRoute) {
             AppRoutes.Bookmark.BookmarkRoot.route -> {
-                appViewModel.updateTopAppBar(
-                    TopAppBarConfig(
-                        title = context.getString(com.vsay.pintereststylegriddemo.feature.bookmarks.R.string.bookmark_screen_title),
-                        navigationIconType = NavigationIconType.BACK,
-                        onNavigationIconClick = { mainNavController.navigateUp() },
-                        isVisible = true
-                        // actions = {} // Add if needed
-                    )
+                TopAppBarConfig(
+                    title = context.getString(com.vsay.pintereststylegriddemo.feature.bookmarks.R.string.bookmark_screen_title),
+                    navigationIconType = NavigationIconType.BACK,
+                    isVisible = true
+                    // actions = {} // Add if needed
                 )
             }
 
             AppRoutes.Main.Home.route -> {
-                appViewModel.updateTopAppBar(
-                    TopAppBarConfig(
-                        title = context.getString(CoreUiR.string.home_screen_title),
-                        navigationIconType = NavigationIconType.NONE,
-                        isVisible = true
-                    )
+                TopAppBarConfig(
+                    title = context.getString(CoreUiR.string.home_screen_title),
+                    navigationIconType = NavigationIconType.NONE,
+                    isVisible = true
                 )
             }
 
             AppRoutes.Main.Detail.route -> {
-                appViewModel.updateTopAppBar(
-                    TopAppBarConfig(
-                        title = context.getString(CoreUiR.string.details_screen_title),
-                        navigationIconType = NavigationIconType.BACK,
-                        onNavigationIconClick = { mainNavController.navigateUp() },
-                        isVisible = true
-                    )
+                TopAppBarConfig(
+                    title = context.getString(CoreUiR.string.details_screen_title),
+                    navigationIconType = NavigationIconType.BACK,
+                    onNavigationIconClick = { mainNavController.navigateUp() },
+                    isVisible = true
+                )
+            }
+
+            /**
+             * Because Profile related screens have titles and navigation icon types (usually "Back" for sub-screens) are fairly static and predictable based on the route,
+             * having AppWithTopBar manage their TopAppBarConfig via the currentRoute is the cleaner, more decoupled approach.
+             * It keeps your :feature-profile module simple and focused.You don't need to make MainActivity bigger. This logic is well-contained within AppWithTopBar.kt, which is already responsible for the main app shell UI.
+             * If the when block in AppWithTopBar for route-to-config mapping becomes very large, you can extract that mapping logic into a helper function or object within the :app module to keep AppWithTopBar itself cleaner.
+             */
+            // --- Profile Graph Routes ---
+            AppRoutes.Profile.ProfileRoot.route -> {
+                TopAppBarConfig(
+                    title = context.getString(CoreUiR.string.top_bar_title_profile),
+                    navigationIconType = NavigationIconType.NONE // Or MENU
+                )
+            }
+
+            AppRoutes.Profile.EditProfile.route -> {
+                TopAppBarConfig(
+                    title = context.getString(CoreUiR.string.top_bar_title_profile_edit),
+                    onNavigationIconClick = { mainNavController.navigateUp() },
+                    navigationIconType = NavigationIconType.BACK
+                )
+            }
+
+            AppRoutes.Profile.AccountSettingsOverview.route -> {
+                TopAppBarConfig(
+                    title = context.getString(CoreUiR.string.top_bar_title_account_settings),
+                    onNavigationIconClick = { mainNavController.navigateUp() },
+                    navigationIconType = NavigationIconType.BACK
+                )
+            }
+
+            AppRoutes.Profile.ChangePassword.route -> {
+                TopAppBarConfig(
+                    title = context.getString(CoreUiR.string.top_bar_title_change_password),
+                    onNavigationIconClick = { mainNavController.navigateUp() },
+                    navigationIconType = NavigationIconType.BACK
+                )
+            }
+
+            AppRoutes.Profile.ManageNotifications.route -> {
+                TopAppBarConfig(
+                    title = context.getString(CoreUiR.string.top_bar_title_manage_notifications),
+                    onNavigationIconClick = { mainNavController.navigateUp() },
+                    navigationIconType = NavigationIconType.BACK
                 )
             }
             // Add other routes from AppRoutes that need specific TopAppBar configurations
 
             else -> {
-                // If the route is not handled explicitly, hide the app bar.
-                // AppViewModel.hideTopAppBar() sets isVisible = false while keeping other config.
-                // This is good if you want to animate out/in an app bar with the same title.
-                // If a completely new config (or lack thereof) is desired, use updateTopAppBar.
-                // For simplicity, hideTopAppBar() is fine here.
-                appViewModel.hideTopAppBar()
+                TopAppBarConfig(isVisible = false)
             }
         }
+        appViewModel.updateTopAppBar(newToolBarConfig)
     }
 
     val bottomNavItems = listOf(
@@ -200,8 +241,14 @@ fun AppWithTopBar(
                                 val targetRoute = screen.route
                                 val popUpToRoute = mainNavController.graph.findStartDestination().id
 
-                                Log.d("NAV_DEBUG", "OnClick: Attempting to navigate to targetRoute = $targetRoute")
-                                Log.d("NAV_DEBUG", "OnClick: Current Destination (before nav) = ${mainNavController.currentDestination?.route}")
+                                Log.d(
+                                    "NAV_DEBUG",
+                                    "OnClick: Attempting to navigate to targetRoute = $targetRoute"
+                                )
+                                Log.d(
+                                    "NAV_DEBUG",
+                                    "OnClick: Current Destination (before nav) = ${mainNavController.currentDestination?.route}"
+                                )
                                 Log.d("NAV_DEBUG", "OnClick: PopUpTo Route = $popUpToRoute")
 
                                 mainNavController.navigate(targetRoute) {
@@ -219,6 +266,13 @@ fun AppWithTopBar(
             }
         }
     ) { innerPadding ->
+        /**
+         * AppWithTopBar's NavHost (Inner NavHost): This NavHost is responsible for navigation within the authenticated part of your application. Once the user is logged in and AppWithTopBar is displayed, this inner NavHost handles navigation between screens like:
+         * • Home
+         * • Profile
+         * • Bookmarks
+         * • Detail screens, etc. It's scoped specifically to the user's main interaction area.
+         */
         AppNavHost(
             navController = mainNavController,
             appNavigator = appNavigator, // Pass the appNavigator

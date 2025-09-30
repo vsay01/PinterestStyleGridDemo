@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<journey name="DebugHiltJourney">
+    <description>A Journey that tests hilt</description>
+    <actions>
+        <action>
+            Journey: DebugHilt
+            Name: Debug Hilt Injection for Journeys
+            Tags: debug
+
+            Given I am on the very first screen of the app after launch
+        </action>
+    </actions>
+</journey>

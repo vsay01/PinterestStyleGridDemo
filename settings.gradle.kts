@@ -27,13 +27,18 @@ dependencyResolutionManagement {
 rootProject.name = "PinterestStyleGridDemo"
 include(":app")
 includeBuild("convention-plugins")
-include(":feature-bookmarks")
 
 include(":core-ui")
 include(":core-navigation")
 include(":core-common")
 include(":core-domain")
 include(":core-data")
+include(":core-auth-state")
+include(":core-platform-utils")
+
 include(":feature-home")
 include(":feature-detail")
-include(":core-platform-utils")
+include(":feature-auth")
+include(":feature-profile")
+include(":feature-bookmarks")
+include(":test-utils")

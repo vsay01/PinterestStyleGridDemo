@@ -1,11 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
 <journey name="HomeToDetailNavigationJourney">
-    <description>Verifies that a user can launch the app, see the home screen image grid, tab onthe
-        first image, and successfully navigate to its detail screen</description>
+    <description>Verifies navigation from the home screen image grid to the image detail screen
+        for a user who logs in via the UI using a real Firebase test account.
+        Actions conceptually map to reusable Kotlin step definitions.</description>
     <actions>
-        <action>Launch the PinterestStyleGridDemo app.
-            After the app loads, check that a grid of images is visible on the home screen.
-            Then, tap on the very first image in the grid.
-            Finally, verify that a new screen appears showing the details of the image.</action>
+        <action>Journey: HomeToDetailNavigationWithRealLogin Name: Home to Detail Screen Navigation
+            (Real Firebase Login) Description: Verifies UI login with a real test account, then
+            navigation from the home screen image grid to the image detail screen, including
+            verification of specific image content. Author: VSay Tags: navigation, real-auth, p1
+
+            # NO PRECONDITION about being already logged in. # The app will start, and we will
+            perform a UI login.
+
+            # Main Journey Steps: Given I am on the login screen # This step assumes the app starts
+            on or can be navigated to the login screen.
+
+            When I call 'SharedJourneySteps.attemptUILogin' with email 'toto@yopmail.com' and pass
+            'Asdf12345' # IMPORTANT: Replace with actual credentials for a VALID test account in
+            your Firebase project.
+
+            Then I should be on the home screen # This step should verify that login was successful
+            and the home screen is displayed.# e.g., Then I call
+            'SharedJourneySteps.verifyUserIsOnHomeScreen'.
+
+            When I call 'SharedJourneySteps.selectFirstImageInGrid'. # This step simulates the user
+            tapping on the first available image in the grid. # For this test, we assume the first
+            image consistently has an identifiable # characteristic, e.g., a title like "Static Test
+            Image Title 1".
+
+            Then I call 'SharedJourneySteps.verifyDetailScreenIsVisible' with
+            expectedImageIdentifier 'Static Test Image Title 1'. # PARAMETERIZED VERIFICATION: We
+            now pass an expected identifier. # Replace 'Static Test Image Title 1' with an actual
+            identifier # you expect for the first image in your test dataset when displayed on the
+            detail screen.
+
+            # Conceptual Post-condition / Cleanup (Optional but good practice for test isolation): #
+            If SharedJourneySteps.signOutUserViaUI exists and works: # Postcondition: Call
+            'SharedJourneySteps.signOutUserViaUI'</action>
     </actions>
 </journey>

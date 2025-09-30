@@ -27,4 +27,13 @@
     <string name="bottom_nav_home">Home</string>
     <string name="bottom_nav_bookmark">Bookmark</string>
     <string name="bottom_nav_profile">Profile</string>
+
+    <!-- TopAppBar Titles for Profile Feature Screens -->
+    <string name="top_bar_title_profile_edit">Edit Profile</string>
+    <string name="top_bar_title_account_settings">Account Settings</string>
+    <string name="top_bar_title_change_password">Change Password</string>
+    <string name="top_bar_title_manage_notifications">Manage Notifications</string>
+
+    <!-- You likely already have this for ProfileScreen itself -->
+    <string name="top_bar_title_profile">Profile</string>
 </resources>

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<journey name="UserLoginSuccess">
+    <description>A Journey that tests user login success flow</description>
+    <actions>
+        <action>Journey: UserLoginSuccess
+            Description: Verifies a user can successfully log in.
+            Tags: auth, smoke
+
+            Given I am on the Sign In screen. // Assumes a precondition or app starts here if logged
+            out
+
+            When I call 'SharedJourneySteps.attemptLogin' with email 'test.user@example.com' and
+            pass 'password123'.
+
+            Then I call 'SharedJourneySteps.verifyLoginSuccess'.
+        </action>
+    </actions>
+</journey>

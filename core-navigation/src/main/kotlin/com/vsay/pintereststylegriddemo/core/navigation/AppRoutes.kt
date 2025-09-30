@@ -27,6 +27,7 @@ sealed class AppRoutes(open val routeDefinition: String) {
      * Purpose: Defines the route for the specific Composable screen that shows the main home content.
      * Needed For: To be the startDestination within HomeGraph and to have a unique identifier for the composable that builds the HomeScreen UI.
      */
+    object AuthGraph : AppRoutes("auth_graph")         // Dedicated graph for the Home tab
     object HomeGraph : AppRoutes("home_graph")         // Dedicated graph for the Home tab
     object BookmarkGraph : AppRoutes("bookmark_graph") // Consistent naming
     object ProfileGraph : AppRoutes("profile_graph")   // Consistent naming for the Profile tab's graph
@@ -90,6 +91,15 @@ sealed class AppRoutes(open val routeDefinition: String) {
         }
 
         object NotificationSettings : Settings("settings/notifications")
+    }
+
+    // --- Routes within Auth Feature Area (for AuthGraph) ---
+    sealed class Auth(override val routeDefinition: String) : AppRoutes(routeDefinition) {
+        // These routes are destinations *within* the AuthGraph
+        object Landing : Auth("${AuthGraph.routeDefinition}/landing") // e.g., "auth_graph/landing"
+        object SignIn : Auth("${AuthGraph.routeDefinition}/sign_in")   // e.g., "auth_graph/sign_in"
+        object SignUp : Auth("${AuthGraph.routeDefinition}/sign_up")   // e.g., "auth_graph/sign_up"
+        object ForgotPassword : Auth("${AuthGraph.routeDefinition}/forgot_password")
     }
 
     val route: String get() = this.routeDefinition

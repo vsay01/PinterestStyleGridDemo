@@ -7,6 +7,7 @@ import androidx.navigation.compose.NavHost
 import com.vsay.pintereststylegriddemo.R
 import com.vsay.pintereststylegriddemo.feature_detail.navigation.detailNavGraph
 import com.vsay.pintereststylegriddemo.navigation.homeNavGraph
+import com.vsay.pintereststylegriddemo.navigation.profileGraph
 import com.vsay.pintereststylegriddemo.presentation.app.AppViewModel
 import com.vsay.pintereststylegriddemo.ui.bookmarkNavGraph
 
@@ -48,6 +49,6 @@ fun AppNavHost(
             }
         )
         bookmarkNavGraph()  // Corresponds to BottomNavItem.Bookmark.route
-        profileGraph(navController, appViewModel) // Corresponds to BottomNavItem.Profile.route
+        profileGraph(navController) // Corresponds to BottomNavItem.Profile.route
     }
 }

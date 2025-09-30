@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<journey name="ViewImageDetailViaTestHarnessJourney">
+    <description>Verifies the image detail screen can be launched directly and shows correct
+        information using a test harness activity. This version uses a hardcoded image ID
+        due to XML validation issues with inputParameters and focuses on testing the
+        activity launch capability.</description>
+    <actions>
+        <action>
+            Name: View Specific Image Detail via Test Harness (Hardcoded ID)
+            Description: Launches to an image detail screen using a test harness,
+            passing a hardcoded image ID as an Intent extra.
+            Author: VSay
+            Tags: test-harness, navigation, detail-screen, p0
+
+            # Step 1: Launch the test harness activity with a hardcoded targetImageId
+            # We are using "0" as a hardcoded example.
+            Given I launch the
+            'com.vsay.pintereststylegriddemo.testharnesses.ImageDetailTestHarnessActivity' with
+            string extra 'EXTRA_IMAGE_ID' set to '0'.
+
+            # Step 2: Verify the detail screen is visible and (conceptually) the correct ID
+            # The 'expectedImageId' will also be hardcoded here to match.
+            Then I call 'SharedJourneySteps.verifyDetailScreenIsVisible' with expectedImageId '0'.
+
+            # Step 3: A more general visibility check for the screen
+            And I verify element with test tag 'image_detail_screen' is visible.
+        </action>
+    </actions>
+</journey>

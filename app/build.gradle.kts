@@ -5,6 +5,7 @@ plugins {
     alias(libs.plugins.kotlin.parcelize)
     alias(libs.plugins.hilt.android)
     kotlin("kapt")
+    alias(libs.plugins.googleServices)
 }
 
 android {
@@ -18,7 +19,8 @@ android {
         versionCode = 1
         versionName = "1.0"
 
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner =
+            "com.vsay.pintereststylegriddemo.testing.fakes.di.CustomTestRunner"
     }
 
     buildTypes {
@@ -52,9 +54,16 @@ dependencies {
     implementation(project(":core-data"))
     implementation(project(":core-navigation"))
     implementation(project(":core-ui"))
+    implementation(project(":core-auth-state"))
     implementation(project(":feature-home"))
     implementation(project(":feature-detail"))
     implementation(project(":feature-bookmarks"))
+    implementation(project(":feature-auth"))
+    implementation(project(":feature-profile"))
+    androidTestImplementation(project(":test-utils"))
+
+    implementation(platform(libs.firebase.bom))
+    implementation(libs.firebase.analytics)
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
@@ -100,9 +109,11 @@ dependencies {
     implementation(libs.accompanist.placeholder.material)
 
     // Hilt for dependency injection
-    implementation (libs.hilt.android)
-    kapt (libs.hilt.compiler)
-    implementation (libs.androidx.hilt.navigation.compose)
+    implementation(libs.hilt.android)
+    kapt(libs.hilt.compiler)
+    androidTestImplementation(libs.hilt.android.testing)
+    kaptAndroidTest(libs.hilt.compiler)
+    implementation(libs.androidx.hilt.navigation.compose)
 
     // navigation
     implementation(libs.androidx.navigation.compose)
